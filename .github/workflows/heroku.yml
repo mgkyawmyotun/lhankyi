@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: "lhankyi" 
           heroku_email: "mg.kmt.kyawmyotun@gmail.com"
           usedocker: true
+          appdir: "backend" 
