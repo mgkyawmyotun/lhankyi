@@ -15,6 +15,12 @@ export class UsersService {
   async getUsers() {
     return this.usersRepository.find({});
   }
+  async getUser(user_id: number) {
+    return this.usersRepository.findOne(
+      { user_id },
+      { select: ['email', 'name', 'user_id'] },
+    );
+  }
   async createUser(
     name: string,
     email: string,
