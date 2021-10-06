@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserError } from './models/user.model';
+import { signJWT } from '../utils';
+import { UserCreateResult } from './models/user.model';
 import { User } from './user.entity';
 import { userValidationSchema } from './user.validation';
 
@@ -18,7 +19,7 @@ export class UsersService {
     name: string,
     email: string,
     password: string,
-  ): Promise<UserError> {
+  ): Promise<typeof UserCreateResult> {
     try {
       await userValidationSchema.validate({
         name,
@@ -40,8 +41,12 @@ export class UsersService {
     }
     try {
       const user = this.usersRepository.create({ name, email, password });
-      await this.usersRepository.save(user);
+
+      const { user_id } = await this.usersRepository.save(user);
+      const jwt_token = signJWT(user_id);
+      return { token: jwt_token };
     } catch (error) {
+      Logger.error(error);
       return {
         path: 'Internal Error',
         message: 'Internal Server Error',

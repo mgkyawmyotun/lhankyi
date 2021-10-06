@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class User {
@@ -17,3 +17,22 @@ export class UserError {
   @Field({ nullable: true })
   message: string;
 }
+
+@ObjectType()
+export class Token {
+  @Field({ nullable: true })
+  token: string;
+}
+export const UserCreateResult: Token | UserError = createUnionType({
+  name: 'UserCreateResult',
+  types: () => [Token, UserError],
+  resolveType(value) {
+    if (value.token) {
+      return Token;
+    }
+    if (value.path || value.message) {
+      return UserError;
+    }
+    return null;
+  },
+});
