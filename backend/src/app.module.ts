@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
+import { isProduction } from './utils';
 
 @Module({
   imports: [
@@ -13,17 +14,16 @@ import { UsersModule } from './users/users.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV == 'production' ? true : false,
+      ssl: isProduction() ? true : false,
       entities: [User],
       synchronize: true,
-      extra:
-        process.env.NODE_ENV == 'production'
-          ? {
-              ssl: {
-                rejectUnauthorized: false,
-              },
-            }
-          : false,
+      extra: isProduction()
+        ? {
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          }
+        : false,
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
