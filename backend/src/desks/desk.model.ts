@@ -1,4 +1,4 @@
-import { Field, InterfaceType, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, InterfaceType, ObjectType } from '@nestjs/graphql';
 
 @InterfaceType()
 export class DeskInterface {
@@ -8,4 +8,17 @@ export class DeskInterface {
 @ObjectType({ implements: DeskInterface })
 export class Desk implements DeskInterface {
   name: string;
+}
+@InputType()
+export class DeskInput {
+  @Field()
+  name: string;
+}
+
+@ObjectType()
+export class DeskError {
+  @Field({ nullable: true })
+  path: string;
+  @Field({ nullable: true })
+  message: string;
 }
