@@ -18,3 +18,14 @@ export const userValidationSchema = yup.object().shape({
     .min(5)
     .required(),
 });
+export const loginValidationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email()
+    .max(255)
+    .required(),
+  password: yup
+    .string()
+    .min(5)
+    .required(),
+});

@@ -1,7 +1,13 @@
-import { createUnionType, Field, ObjectType } from '@nestjs/graphql';
+import {
+  createUnionType,
+  Field,
+  InputType,
+  InterfaceType,
+  ObjectType,
+} from '@nestjs/graphql';
 
-@ObjectType()
-export class User {
+@InterfaceType()
+export class UserInterface {
   @Field({ nullable: true })
   name: string;
   @Field({ nullable: true })
@@ -9,7 +15,29 @@ export class User {
   @Field({ nullable: true })
   password: string;
 }
+@ObjectType({ implements: UserInterface })
+export class User implements UserInterface {
+  name: string;
+  email: string;
+  password: string;
+}
+@InputType({})
+export class RegisterInput {
+  @Field()
+  name: string;
+  @Field()
+  email: string;
+  @Field()
+  password: string;
+}
 
+@InputType({})
+export class LoginInput {
+  @Field()
+  email: string;
+  @Field()
+  password: string;
+}
 @ObjectType()
 export class UserError {
   @Field({ nullable: true })

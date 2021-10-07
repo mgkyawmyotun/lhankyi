@@ -1,10 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { signJWT } from '../utils';
 import { UserCreateResult } from './models/user.model';
 import { User } from './user.entity';
-import { userValidationSchema } from './user.validation';
+import { loginValidationSchema, userValidationSchema } from './user.validation';
 
 @Injectable()
 export class UsersService {
@@ -58,5 +59,39 @@ export class UsersService {
         message: 'Internal Server Error',
       };
     }
+  }
+  async loginUser(
+    email: string,
+    password: string,
+  ): Promise<typeof UserCreateResult> {
+    try {
+      await loginValidationSchema.validate({ email, password });
+    } catch (error) {
+      return {
+        path: error.path,
+        message: error.message,
+      };
+    }
+    const [user] = await this.usersRepository
+      .createQueryBuilder()
+      .select('user_id,password')
+      .where('email=:mail', { mail: email })
+      .andWhere('password is not null')
+      .execute();
+    if (!user) {
+      return {
+        path: 'email/password',
+        message: 'Invalid Email or Password',
+      };
+    }
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (!isValidPassword) {
+      return {
+        path: 'email/password',
+        message: 'Invalid Email or Password',
+      };
+    }
+    const jwt_token = signJWT(user.user_id);
+    return { token: jwt_token };
   }
 }
