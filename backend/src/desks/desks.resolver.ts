@@ -20,4 +20,16 @@ export class DeskResolver {
   removeDesk(@Args('desk_name') desk_name: string, @Context() context) {
     return this.deskService.removeDesk(desk_name, context.user_id);
   }
+  @Mutation(returns => DeskError, { nullable: true })
+  editDesk(
+    @Args('new_desk_name') new_desk_name: string,
+    @Args('old_desk_name') old_desk_name: string,
+    @Context() context,
+  ) {
+    return this.deskService.editDesk(
+      new_desk_name,
+      old_desk_name,
+      context.user_id,
+    );
+  }
 }

@@ -57,4 +57,22 @@ export class DeskService {
       };
     }
   }
+  async editDesk(
+    new_desk_name: string,
+    old_desk_name: string,
+    user_id: number,
+  ): Promise<DeskError> {
+    try {
+      await this.deskRepository.update(
+        { name: old_desk_name, user: { user_id } },
+        { name: new_desk_name },
+      );
+      return null;
+    } catch (error) {
+      return {
+        path: 'Internal Error',
+        message: 'Internal Server Error',
+      };
+    }
+  }
 }
