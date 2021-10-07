@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DeskEntity } from './desks/desk.entity';
+import { DesksModule } from './desks/desks.module';
 import { User } from './users/user.entity';
 import { UsersModule } from './users/users.module';
 import { isProduction } from './utils';
@@ -15,7 +17,7 @@ import { isProduction } from './utils';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       ssl: isProduction() ? true : false,
-      entities: [User],
+      entities: [User, DeskEntity],
       synchronize: true,
       extra: isProduction()
         ? {
@@ -35,6 +37,7 @@ import { isProduction } from './utils';
       },
     }),
     UsersModule,
+    DesksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

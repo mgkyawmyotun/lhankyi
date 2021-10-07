@@ -6,7 +6,7 @@ import {
   RegisterInput,
   User,
   UserCreateResult,
-} from './models/user.model';
+} from './user.model';
 import { UsersService } from './users.service';
 
 @Resolver(of => User)

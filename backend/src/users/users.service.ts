@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { signJWT } from '../utils';
-import { UserCreateResult } from './models/user.model';
 import { User } from './user.entity';
+import { UserCreateResult } from './user.model';
 import { loginValidationSchema, userValidationSchema } from './user.validation';
 
 @Injectable()
