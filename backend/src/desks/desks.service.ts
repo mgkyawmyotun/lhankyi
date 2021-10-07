@@ -11,7 +11,7 @@ export class DeskService {
     @InjectRepository(DeskEntity)
     private deskRepository: Repository<DeskEntity>,
   ) {}
-  async getDesk(user_id: number) {
+  async getDesks(user_id: number) {
     try {
       const desks = await this.deskRepository.find({ user: { user_id } });
       return desks;
@@ -45,5 +45,16 @@ export class DeskService {
       };
     }
     return null;
+  }
+  async removeDesk(name: string, user_id: number): Promise<DeskError> {
+    try {
+      await this.deskRepository.delete({ name: name, user: { user_id } });
+      return null;
+    } catch (error) {
+      return {
+        path: 'Internal Error',
+        message: 'Internal Error Please Contact Admin',
+      };
+    }
   }
 }
