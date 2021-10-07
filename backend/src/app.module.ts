@@ -35,6 +35,10 @@ import { isProduction } from './utils';
           headers: req.headers,
         };
       },
+      cors: {
+        credentials: true,
+        origin: true,
+      },
     }),
     UsersModule,
     DesksModule,
