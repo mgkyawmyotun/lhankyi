@@ -3,7 +3,7 @@ export function isProduction() {
   return process.env.NODE_ENV == 'production';
 }
 
-export function signJWT(user_id: number) {
+export function signJWT(user_id: string) {
   return sign({ user_id }, process.env.JWT_SECRECT, { expiresIn: '30d' });
 }
 export function validateJWT(token: string) {

@@ -1,8 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { CONTEXT } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { signJWT } from '../utils';
+import { GraphQlContextType } from './../share.d';
 import { User } from './user.entity';
 import { UserCreateResult } from './user.model';
 import { loginValidationSchema, userValidationSchema } from './user.validation';
@@ -12,13 +14,14 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    @Inject(CONTEXT) private context: GraphQlContextType,
   ) {}
   async getUsers() {
     return this.usersRepository.find({});
   }
-  async getUser(user_id: number) {
+  async getUser() {
     return this.usersRepository.findOne(
-      { user_id },
+      { user_id: this.context.user_id },
       { select: ['email', 'name', 'user_id'] },
     );
   }

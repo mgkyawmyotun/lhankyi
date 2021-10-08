@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthGuard } from './../auth.gurad';
 import {
   LoginInput,
@@ -18,9 +18,8 @@ export class UsersResolver {
   }
   @Query(returns => User)
   @UseGuards(AuthGuard)
-  getUser(@Context() context): Promise<User> {
-    const user_id = context.user_id as number;
-    return this.userService.getUser(user_id);
+  getUser(): Promise<User> {
+    return this.userService.getUser();
   }
   @Mutation(reutrns => UserCreateResult, { nullable: true })
   createUser(

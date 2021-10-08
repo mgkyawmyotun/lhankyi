@@ -7,7 +7,6 @@ export class AuthGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    //     console.log(context.switchToHttp())
     const gqlContext = context.getArgByIndex(2);
     const token = gqlContext.headers.authorization;
     if (!token) return false;
