@@ -2,10 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CONTEXT } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { GraphQlContextType } from '../share';
 import { DeskEntity } from './../desks/desk.entity';
-import { GraphQlContextType } from './../share.d';
 import { CardEntity } from './card.entity';
 import { CardError, CardInputData } from './card.model';
+import { cardValidationSchema } from './card.validation';
 
 @Injectable()
 export class CardsService {
@@ -21,7 +22,17 @@ export class CardsService {
       relations: ['desk', 'desk.user'],
       where: { desk: { user: { user_id: this.context.user_id } } },
     });
-    console.log(cards);
+    return cards;
+  }
+  async getCardsByDesk(desk_name: string) {
+    try {
+    } catch (error) {}
+    const cards = await this.cardRespository.find({
+      relations: ['desk', 'desk.user'],
+      where: {
+        desk: { user: { user_id: this.context.user_id }, name: desk_name },
+      },
+    });
     return cards;
   }
   async createCard({
@@ -31,17 +42,29 @@ export class CardsService {
     desk_name,
   }: CardInputData): Promise<CardError | null> {
     try {
-    } catch (error) {}
+      await cardValidationSchema.validate({
+        card_name,
+        card_data_back,
+        card_data_front,
+        desk_name,
+      });
+    } catch (error) {
+      return {
+        path: error.path,
+        message: error.message,
+      };
+    }
     try {
-      const desk_exits = await this.deskRespository.findOne(
-        {
-          name: desk_name,
-          user: { user_id: this.context.user_id },
-        },
-        { relations: ['user'] },
-      );
-      console.log(desk_exits);
+      const desk_exits = await this.deskRespository
+        .createQueryBuilder('desk')
+        .leftJoinAndSelect('desk.user', 'user')
+        .where('user.user_id = :user_id', { user_id: this.context.user_id })
+        .andWhere('desk.name = :desk_name', { desk_name: desk_name })
+        .execute();
 
+      if (desk_exits.length == 0) {
+        throw new Error();
+      }
       const card = this.cardRespository.create({
         card_name,
         card_data_back,
@@ -49,10 +72,9 @@ export class CardsService {
         desk: { name: desk_name, user: { user_id: this.context.user_id } },
       });
 
-      const card_data = await this.cardRespository.save(card);
+      await this.cardRespository.save(card);
       return null;
     } catch (error) {
-      console.log(error);
       return {
         path: 'desk_name',
         message: 'Invalid Desk Name',

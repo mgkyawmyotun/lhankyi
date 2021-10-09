@@ -6,4 +6,5 @@ export const cardValidationSchema = yup.object().shape({
     .required(),
   card_data_back: yup.string(),
   card_data_front: yup.string(),
+  desk_name: yup.string().required(),
 });

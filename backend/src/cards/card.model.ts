@@ -1,7 +1,8 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { DateType } from '../share';
 import { Desk } from './../desks/desk.model';
-@ObjectType()
-export class Card {
+@ObjectType({ implements: DateType })
+export class Card implements DateType {
   @Field()
   card_id: number;
   @Field()
@@ -12,6 +13,8 @@ export class Card {
   card_data_back: string;
   @Field()
   desk: Desk;
+  updated_at: Date;
+  created_at: Date;
 }
 @ObjectType()
 export class CardError {

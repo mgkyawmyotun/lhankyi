@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CONTEXT } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { GraphQlContextType } from './../share.d';
+import { GraphQlContextType } from '../share';
 import { DeskEntity } from './desk.entity';
 import { DeskError } from './desk.model';
 import { deskValidationSchema } from './desk.validation';
