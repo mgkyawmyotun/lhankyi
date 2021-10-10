@@ -97,5 +97,8 @@
     &:hover {
       background-color: $darkest-blue;
     }
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }

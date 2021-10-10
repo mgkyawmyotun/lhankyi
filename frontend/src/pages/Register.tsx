@@ -5,6 +5,7 @@ import { InputField } from '../components/InputField';
 import styles from '../scss/register.module.scss';
 import Logo from '../svg/Logo';
 import RegisterFormIllustraion from '../svg/ReigsterFormIllustration';
+import { registerSchema } from '../utils/validation';
 export const Register: FC = () => {
   return (
     <div className={styles.register}>
@@ -28,11 +29,12 @@ export const Register: FC = () => {
                   name: '',
                   password: '',
                 }}
+                validationSchema={registerSchema}
                 onSubmit={(values) => {
                   console.log(values);
                 }}
               >
-                {({ handleSubmit }) => {
+                {({ handleSubmit, errors }) => {
                   return (
                     <>
                       <InputField
@@ -50,7 +52,15 @@ export const Register: FC = () => {
                         name={'password'}
                         type="password"
                       ></InputField>
-                      <button onClick={() => handleSubmit()}>ဖွင့်မည်</button>
+                      <button
+                        type="submit"
+                        onClick={() => handleSubmit()}
+                        disabled={
+                          !!(errors.email || errors.name || errors.password)
+                        }
+                      >
+                        ဖွင့်မည်
+                      </button>
                     </>
                   );
                 }}

@@ -2,6 +2,9 @@
 @import 'font';
 .input_field {
   margin-top: 1em;
+  & > div {
+    color: rgb(250, 169, 169);
+  }
   & > label {
     font-weight: bold;
     font-style: normal;
