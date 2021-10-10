@@ -1,5 +1,68 @@
 @import 'color';
+@import 'font';
 .register {
   background-color: $dark-blue;
   height: 100vh;
+  width: 100%;
+}
+.register__container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 2.5em;
+}
+
+.register__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $thin-blue;
+  & > svg {
+    width: 4em;
+    height: 4em;
+  }
+  & > h3 {
+    font-size: 1.5rem;
+  }
+}
+
+.register__form {
+  width: 90%;
+  background-color: $weird-blue;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  grid-template-rows: 1fr;
+}
+
+.register__form__left {
+  padding: 4em 2em;
+  font-family: $myanmar-khway;
+  background-color: $medium-blue;
+  color: $thin-blue;
+  & > h1 {
+    font-size: 2rem;
+    line-height: 1.5;
+  }
+  & > h3 {
+    font-size: 1rem;
+    color: $light-blue;
+    margin-top: 1em;
+  }
+  & > svg {
+    width: 100%;
+    height: 80%;
+  }
+}
+
+.register__form__right {
+  padding: 4em 2em;
+
+  & > h1 {
+    font-family: $myanmar-khway;
+    font-size: 1.5rem;
+    text-align: center;
+    text-decoration: underline;
+    color: $darkest-blue;
+  }
 }
