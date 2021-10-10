@@ -57,12 +57,45 @@
 
 .register__form__right {
   padding: 4em 2em;
+  width: 100%;
 
-  & > h1 {
+  & > h1:first-child {
     font-family: $myanmar-khway;
     font-size: 1.5rem;
     text-align: center;
     text-decoration: underline;
     color: $darkest-blue;
+  }
+  & > h1:last-child {
+    font-family: $myanmar-khway;
+    font-size: 1rem;
+    text-align: center;
+    color: $pure-white;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.form {
+  width: 100%;
+  padding: 4em 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & button {
+    font-family: $myanmar-khway;
+    font-size: 1rem;
+    margin-top: 1em;
+    background-color: transparent;
+    padding: 1em 4em;
+    outline: none;
+    border: none;
+    background-color: $dark-blue;
+    color: $pure-white;
+    cursor: pointer;
+    &:hover {
+      background-color: $darkest-blue;
+    }
   }
 }

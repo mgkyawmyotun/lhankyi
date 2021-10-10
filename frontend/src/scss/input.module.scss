@@ -1,0 +1,44 @@
+@import 'color';
+@import 'font';
+.input_field {
+  margin-top: 1em;
+  & > label {
+    font-weight: bold;
+    font-style: normal;
+    text-transform: uppercase;
+    color: $dark-blue;
+    display: block;
+  }
+  & input {
+    padding: 0.5em 0.75em;
+    background-color: transparent;
+    outline: none;
+    border: 2px solid $light-blue;
+    font-size: 1.25rem;
+    width: 20em;
+    position: relative;
+    border-radius: 0.5em;
+
+    font-weight: bold;
+    color: $darkest-blue;
+    &:focus,
+    :active {
+      outline: none;
+      border: 2px solid $thin-blue;
+      background-color: transparent;
+    }
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: $darkest-blue !important;
+    }
+    &::before {
+      position: absolute;
+      content: attr(data-label);
+      top: 0;
+      left: 0;
+    }
+  }
+}

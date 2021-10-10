@@ -1,5 +1,7 @@
+import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
+import { InputField } from '../components/InputField';
 import styles from '../scss/register.module.scss';
 import Logo from '../svg/Logo';
 import RegisterFormIllustraion from '../svg/ReigsterFormIllustration';
@@ -19,6 +21,42 @@ export const Register: FC = () => {
           </div>
           <div className={styles.register__form__right}>
             <h1>အကောင့်ဖွင့်မည်</h1>
+            <div className={styles.form}>
+              <Formik
+                initialValues={{
+                  email: '',
+                  name: '',
+                  password: '',
+                }}
+                onSubmit={(values) => {
+                  console.log(values);
+                }}
+              >
+                {({ handleSubmit }) => {
+                  return (
+                    <>
+                      <InputField
+                        label={'နာမည်'}
+                        name={'name'}
+                        type="text"
+                      ></InputField>
+                      <InputField
+                        label={'Email'}
+                        name={'email'}
+                        type="text"
+                      ></InputField>
+                      <InputField
+                        label={'password'}
+                        name={'password'}
+                        type="password"
+                      ></InputField>
+                      <button onClick={() => handleSubmit()}>ဖွင့်မည်</button>
+                    </>
+                  );
+                }}
+              </Formik>
+            </div>
+            <h1>အကောင့်ဖွင့်ပြီးသားလား?</h1>
           </div>
         </div>
       </div>
