@@ -1,11 +1,9 @@
-import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
-import { InputField } from '../components/InputField';
+import { RegisterForm } from '../components/register/RegisterForm';
 import styles from '../scss/register.module.scss';
 import Logo from '../svg/Logo';
 import RegisterFormIllustraion from '../svg/ReigsterFormIllustration';
-import { registerSchema } from '../utils/validation';
 export const Register: FC = () => {
   return (
     <div className={styles.register}>
@@ -22,50 +20,7 @@ export const Register: FC = () => {
           </div>
           <div className={styles.register__form__right}>
             <h1>အကောင့်ဖွင့်မည်</h1>
-            <div className={styles.form}>
-              <Formik
-                initialValues={{
-                  email: '',
-                  name: '',
-                  password: '',
-                }}
-                validationSchema={registerSchema}
-                onSubmit={(values) => {
-                  console.log(values);
-                }}
-              >
-                {({ handleSubmit, errors }) => {
-                  return (
-                    <>
-                      <InputField
-                        label={'နာမည်'}
-                        name={'name'}
-                        type="text"
-                      ></InputField>
-                      <InputField
-                        label={'Email'}
-                        name={'email'}
-                        type="text"
-                      ></InputField>
-                      <InputField
-                        label={'password'}
-                        name={'password'}
-                        type="password"
-                      ></InputField>
-                      <button
-                        type="submit"
-                        onClick={() => handleSubmit()}
-                        disabled={
-                          !!(errors.email || errors.name || errors.password)
-                        }
-                      >
-                        ဖွင့်မည်
-                      </button>
-                    </>
-                  );
-                }}
-              </Formik>
-            </div>
+            <RegisterForm />
             <h1>အကောင့်ဖွင့်ပြီးသားလား?</h1>
           </div>
         </div>

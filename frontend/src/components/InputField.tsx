@@ -9,7 +9,7 @@ interface InputFormProps {
   name: string;
 }
 export const InputField: FC<InputFormProps> = ({ label, name, type }) => {
-  const [{}, { error, touched }] = useField({ name });
+  const [_, { error, touched }] = useField({ name });
   return (
     <div className={styles.input_field}>
       <label>{label}</label>

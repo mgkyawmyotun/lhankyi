@@ -1,0 +1,12 @@
+mutation createUser($registerData: RegisterInput!) {
+  createUser(registerData: $registerData) {
+    __typename
+    ... on UserError {
+      path
+      message
+    }
+    ... on Token {
+      token
+    }
+  }
+}

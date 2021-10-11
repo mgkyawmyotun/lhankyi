@@ -1,6 +1,6 @@
 overwrite: true
-schema: 'https://lhankyi.herokuapp.com/graphql'
-documents: 'src/**/*.graphql'
+schema: 'http://localhost:3000/graphql'
+documents: './src/graphql/*.graphql'
 generates:
   src/generated/graphql.tsx:
     plugins:
