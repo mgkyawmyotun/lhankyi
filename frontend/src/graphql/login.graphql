@@ -1,0 +1,12 @@
+mutation login($loginData: LoginInput!) {
+  loginUser(loginData: $loginData) {
+    __typename
+    ... on UserError {
+      path
+      message
+    }
+    ... on Token {
+      token
+    }
+  }
+}

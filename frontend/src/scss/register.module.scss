@@ -1,29 +1,13 @@
 @import 'color';
 @import 'font';
+@import 'utils';
 .register {
   background-color: $dark-blue;
   height: 100vh;
   width: 100%;
 }
 .register__container {
-  width: 80%;
-  height: 100%;
-  margin: 0 auto;
-  padding-top: 2.5em;
-}
-
-.register__nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: $thin-blue;
-  & > svg {
-    width: 4em;
-    height: 4em;
-  }
-  & > h3 {
-    font-size: 1.5rem;
-  }
+  @include container;
 }
 
 .register__form {

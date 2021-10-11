@@ -4,11 +4,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './scss/index.scss';
+import { getToken } from './utils/auth';
 import { getURI } from './utils/helper';
 
 const client = new ApolloClient({
   uri: getURI(),
   cache: new InMemoryCache(),
+  headers: {
+    authorization: getToken(),
+  },
 });
 
 ReactDOM.render(

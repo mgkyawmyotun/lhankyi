@@ -1,0 +1,14 @@
+@import 'color';
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $thin-blue;
+  & > svg {
+    width: 4em;
+    height: 4em;
+  }
+  & > h3 {
+    font-size: 1.5rem;
+  }
+}

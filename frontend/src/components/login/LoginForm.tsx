@@ -3,17 +3,14 @@ import type { FC } from 'react';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
-import {
-  Token,
-  useCreateUserMutation,
-  UserError,
-} from '../../generated/graphql';
-import styles from '../../scss/register.module.scss';
+import { Token, useLoginMutation, UserError } from '../../generated/graphql';
+import styles from '../../scss/login.module.scss';
 import { setToken } from '../../utils/auth';
 import { registerSchema } from '../../utils/validation';
-export const RegisterForm: FC = () => {
+
+export const LoginForm: FC = () => {
   const history = useHistory();
-  const [createUser] = useCreateUserMutation();
+  const [loginUser] = useLoginMutation();
   return (
     <>
       {' '}
@@ -21,20 +18,19 @@ export const RegisterForm: FC = () => {
         <Formik
           initialValues={{
             email: '',
-            name: '',
             password: '',
           }}
           validationSchema={registerSchema}
-          onSubmit={async ({ email, name, password }, { setErrors }) => {
-            const { data } = await createUser({
-              variables: { registerData: { email, name, password } },
+          onSubmit={async ({ email, password }, { setErrors }) => {
+            const { data } = await loginUser({
+              variables: { loginData: { email, password } },
             });
-            if (data?.createUser?.__typename == 'Token') {
-              const { token } = data?.createUser as Token;
+            if (data?.loginUser?.__typename == 'Token') {
+              const { token } = data?.loginUser as Token;
               if (token) setToken(token);
               history.push('/');
             } else {
-              const error = data?.createUser as UserError;
+              const error = data?.loginUser as UserError;
               setErrors({ [error.path as string]: error.message });
             }
           }}
@@ -42,11 +38,6 @@ export const RegisterForm: FC = () => {
           {({ handleSubmit, errors }) => {
             return (
               <>
-                <InputField
-                  label={'နာမည်'}
-                  name={'name'}
-                  type="text"
-                ></InputField>
                 <InputField
                   label={'Email'}
                   name={'email'}
@@ -60,9 +51,9 @@ export const RegisterForm: FC = () => {
                 <button
                   type="submit"
                   onClick={() => handleSubmit()}
-                  disabled={!!(errors.email || errors.name || errors.password)}
+                  disabled={!!(errors.email || errors.password)}
                 >
-                  ဖွင့်မည်
+                  ဝင်မည်
                 </button>
               </>
             );

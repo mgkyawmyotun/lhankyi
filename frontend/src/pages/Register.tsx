@@ -1,17 +1,16 @@
 import type { FC } from 'react';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { NavBar } from '../components/NavBar';
 import { RegisterForm } from '../components/register/RegisterForm';
 import styles from '../scss/register.module.scss';
-import Logo from '../svg/Logo';
 import RegisterFormIllustraion from '../svg/ReigsterFormIllustration';
 export const Register: FC = () => {
+  const { push } = useHistory();
   return (
     <div className={styles.register}>
       <div className={styles.register__container}>
-        <div className={styles.register__nav}>
-          <Logo />
-          <h3>English</h3>
-        </div>
+        <NavBar />
         <div className={styles.register__form}>
           <div className={styles.register__form__left}>
             <h1>စာမှတ်ရတာအခက်အခဲဖြစ်နေပါသလား?</h1>
@@ -21,7 +20,13 @@ export const Register: FC = () => {
           <div className={styles.register__form__right}>
             <h1>အကောင့်ဖွင့်မည်</h1>
             <RegisterForm />
-            <h1>အကောင့်ဖွင့်ပြီးသားလား?</h1>
+            <h1
+              onClick={() => {
+                push('/login');
+              }}
+            >
+              အကောင့်ဖွင့်ပြီးသားလား?
+            </h1>
           </div>
         </div>
       </div>
