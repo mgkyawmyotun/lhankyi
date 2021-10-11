@@ -2,7 +2,9 @@ import React, { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useGetUserQuery } from '../generated/graphql';
 export const MainApp: FC = () => {
-  const { loading, data } = useGetUserQuery({});
+  const { loading, data } = useGetUserQuery({
+    fetchPolicy: 'no-cache',
+  });
 
   const route = useHistory();
   useEffect(() => {
@@ -11,7 +13,7 @@ export const MainApp: FC = () => {
         route.push('/login');
       }
     }
-  }, [loading]);
+  }, [loading, data?.getUser]);
   return (
     <>
       <h1>From App</h1>

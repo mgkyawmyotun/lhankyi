@@ -17,7 +17,7 @@ export class UsersService {
     @Inject(CONTEXT) private context: GraphQlContextType,
   ) {}
   async getUsers() {
-    return this.usersRepository.find({});
+    return this.usersRepository.find({ select: ['name', 'email'] });
   }
   async getUser() {
     return this.usersRepository.findOne(

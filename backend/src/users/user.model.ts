@@ -12,14 +12,11 @@ export class UserInterface {
   name: string;
   @Field({ nullable: true })
   email: string;
-  @Field({ nullable: true })
-  password: string;
 }
 @ObjectType({ implements: UserInterface })
 export class User implements UserInterface {
   name: string;
   email: string;
-  password: string;
 }
 @InputType({})
 export class RegisterInput {

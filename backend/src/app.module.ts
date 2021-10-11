@@ -31,6 +31,7 @@ import { isProduction } from './utils';
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
+
       context: ({ req }): { req: Request; headers: Headers } => {
         return {
           req: req,

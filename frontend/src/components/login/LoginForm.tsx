@@ -6,21 +6,20 @@ import { InputField } from '../../components/InputField';
 import { Token, useLoginMutation, UserError } from '../../generated/graphql';
 import styles from '../../scss/login.module.scss';
 import { setToken } from '../../utils/auth';
-import { registerSchema } from '../../utils/validation';
+import { loginSchema } from '../../utils/validation';
 
 export const LoginForm: FC = () => {
   const history = useHistory();
   const [loginUser] = useLoginMutation();
   return (
     <>
-      {' '}
       <div className={styles.form}>
         <Formik
           initialValues={{
             email: '',
             password: '',
           }}
-          validationSchema={registerSchema}
+          validationSchema={loginSchema}
           onSubmit={async ({ email, password }, { setErrors }) => {
             const { data } = await loginUser({
               variables: { loginData: { email, password } },
@@ -31,7 +30,10 @@ export const LoginForm: FC = () => {
               history.push('/');
             } else {
               const error = data?.loginUser as UserError;
-              setErrors({ [error.path as string]: error.message });
+              setErrors({
+                email: error.message || '',
+                password: error.message || '',
+              });
             }
           }}
         >
