@@ -1,0 +1,11 @@
+mutation createDesk($desk_name: String!) {
+  createDesk(desk_name: $desk_name) {
+    path
+    message
+  }
+}
+query getDesks {
+  getDesks {
+    name
+  }
+}

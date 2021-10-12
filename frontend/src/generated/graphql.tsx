@@ -155,6 +155,18 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserQuery = { __typename?: 'Query', getUser: { __typename?: 'User', name?: string | null | undefined, email?: string | null | undefined } };
 
+export type CreateDeskMutationVariables = Exact<{
+  desk_name: Scalars['String'];
+}>;
+
+
+export type CreateDeskMutation = { __typename?: 'Mutation', createDesk?: { __typename?: 'DeskError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
+export type GetDesksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDesksQuery = { __typename?: 'Query', getDesks?: Array<{ __typename?: 'Desk', name?: string | null | undefined }> | null | undefined };
+
 export type LoginMutationVariables = Exact<{
   loginData: LoginInput;
 }>;
@@ -205,6 +217,74 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const CreateDeskDocument = gql`
+    mutation createDesk($desk_name: String!) {
+  createDesk(desk_name: $desk_name) {
+    path
+    message
+  }
+}
+    `;
+export type CreateDeskMutationFn = Apollo.MutationFunction<CreateDeskMutation, CreateDeskMutationVariables>;
+
+/**
+ * __useCreateDeskMutation__
+ *
+ * To run a mutation, you first call `useCreateDeskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateDeskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createDeskMutation, { data, loading, error }] = useCreateDeskMutation({
+ *   variables: {
+ *      desk_name: // value for 'desk_name'
+ *   },
+ * });
+ */
+export function useCreateDeskMutation(baseOptions?: Apollo.MutationHookOptions<CreateDeskMutation, CreateDeskMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateDeskMutation, CreateDeskMutationVariables>(CreateDeskDocument, options);
+      }
+export type CreateDeskMutationHookResult = ReturnType<typeof useCreateDeskMutation>;
+export type CreateDeskMutationResult = Apollo.MutationResult<CreateDeskMutation>;
+export type CreateDeskMutationOptions = Apollo.BaseMutationOptions<CreateDeskMutation, CreateDeskMutationVariables>;
+export const GetDesksDocument = gql`
+    query getDesks {
+  getDesks {
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetDesksQuery__
+ *
+ * To run a query within a React component, call `useGetDesksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDesksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetDesksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetDesksQuery(baseOptions?: Apollo.QueryHookOptions<GetDesksQuery, GetDesksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetDesksQuery, GetDesksQueryVariables>(GetDesksDocument, options);
+      }
+export function useGetDesksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDesksQuery, GetDesksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetDesksQuery, GetDesksQueryVariables>(GetDesksDocument, options);
+        }
+export type GetDesksQueryHookResult = ReturnType<typeof useGetDesksQuery>;
+export type GetDesksLazyQueryHookResult = ReturnType<typeof useGetDesksLazyQuery>;
+export type GetDesksQueryResult = Apollo.QueryResult<GetDesksQuery, GetDesksQueryVariables>;
 export const LoginDocument = gql`
     mutation login($loginData: LoginInput!) {
   loginUser(loginData: $loginData) {
