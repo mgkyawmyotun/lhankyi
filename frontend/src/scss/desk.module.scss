@@ -1,15 +1,16 @@
 @import 'color';
 @import 'utils';
 .app__desk__pannel {
-  position: relative;
   background-color: $light-blue;
   margin: 2.5em auto;
   height: 70%;
   width: 80%;
+
   padding: 4em 2em;
 }
 .card__pannel {
   width: 100%;
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
@@ -31,19 +32,10 @@
   color: $pure-white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: default;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 
   &:hover {
     background-color: $medium-blue;
-  }
-  & > svg {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0.5em;
   }
 }
 .add_button {
@@ -114,4 +106,39 @@
     background-color: $medium-blue;
     color: rgb(248, 60, 60);
   }
+}
+
+.dropdown {
+  position: absolute;
+  cursor: pointer;
+  transform: translateY(-50%);
+  right: 0.5em;
+  top: 50%;
+  z-index: 1;
+}
+.dropdown__content {
+  /* Position it right below the trigger element */
+  position: absolute;
+  top: -150%;
+  transform: translateY(-50%);
+  left: 100%;
+  z-index: 999;
+
+  background-color: #fff;
+  color: $dark-blue;
+  transform-origin: left center;
+  transform: scale(0);
+  transition: transform;
+  transition-duration: 200ms;
+  padding: 0.5em 0.5em;
+  & > h3 {
+    font-size: 1.25rem;
+    margin-top: 0.5em;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+.dropdown__content__show {
+  transform: scale(1) !important;
 }
