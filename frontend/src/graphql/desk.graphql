@@ -9,3 +9,9 @@ query getDesks {
     name
   }
 }
+mutation removeDesk($desk_name: String!) {
+  removeDesk(desk_name: $desk_name) {
+    path
+    message
+  }
+}

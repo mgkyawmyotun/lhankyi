@@ -167,6 +167,13 @@ export type GetDesksQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetDesksQuery = { __typename?: 'Query', getDesks?: Array<{ __typename?: 'Desk', name?: string | null | undefined }> | null | undefined };
 
+export type RemoveDeskMutationVariables = Exact<{
+  desk_name: Scalars['String'];
+}>;
+
+
+export type RemoveDeskMutation = { __typename?: 'Mutation', removeDesk?: { __typename?: 'DeskError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
 export type LoginMutationVariables = Exact<{
   loginData: LoginInput;
 }>;
@@ -285,6 +292,40 @@ export function useGetDesksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetDesksQueryHookResult = ReturnType<typeof useGetDesksQuery>;
 export type GetDesksLazyQueryHookResult = ReturnType<typeof useGetDesksLazyQuery>;
 export type GetDesksQueryResult = Apollo.QueryResult<GetDesksQuery, GetDesksQueryVariables>;
+export const RemoveDeskDocument = gql`
+    mutation removeDesk($desk_name: String!) {
+  removeDesk(desk_name: $desk_name) {
+    path
+    message
+  }
+}
+    `;
+export type RemoveDeskMutationFn = Apollo.MutationFunction<RemoveDeskMutation, RemoveDeskMutationVariables>;
+
+/**
+ * __useRemoveDeskMutation__
+ *
+ * To run a mutation, you first call `useRemoveDeskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveDeskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeDeskMutation, { data, loading, error }] = useRemoveDeskMutation({
+ *   variables: {
+ *      desk_name: // value for 'desk_name'
+ *   },
+ * });
+ */
+export function useRemoveDeskMutation(baseOptions?: Apollo.MutationHookOptions<RemoveDeskMutation, RemoveDeskMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveDeskMutation, RemoveDeskMutationVariables>(RemoveDeskDocument, options);
+      }
+export type RemoveDeskMutationHookResult = ReturnType<typeof useRemoveDeskMutation>;
+export type RemoveDeskMutationResult = Apollo.MutationResult<RemoveDeskMutation>;
+export type RemoveDeskMutationOptions = Apollo.BaseMutationOptions<RemoveDeskMutation, RemoveDeskMutationVariables>;
 export const LoginDocument = gql`
     mutation login($loginData: LoginInput!) {
   loginUser(loginData: $loginData) {

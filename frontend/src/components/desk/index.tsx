@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
+import { DeskCtx } from '../../context/DeskContext';
 import { GetDesksQuery, useGetDesksQuery } from '../../generated/graphql';
 import styles from '../../scss/desk.module.scss';
 import { Loading } from '../Loading';
@@ -10,25 +11,28 @@ export const Desk: FC = () => {
   const { data, refetch } = useGetDesksQuery();
   useEffect(() => {
     if (data) {
-      console.log('Hello');
       setResult(data);
       setLoading(false);
     }
   }, [data]);
+  async function refetchData() {
+    setLoading(true);
+    const { data } = await refetch();
+    setResult(data);
+    setLoading(false);
+  }
   return (
     <>
-      <div className={styles.app__desk__pannel}>
-        {loading ? <Loading /> : <DeskPannel data={result} />}
-        <AddDesk
-          onClose={async () => {
-            console.log('On Close');
-            setLoading(true);
-            const { data } = await refetch();
-            setResult(data);
-            setLoading(false);
-          }}
-        />
-      </div>
+      <DeskCtx.Provider value={{ refetchData }}>
+        <div className={styles.app__desk__pannel}>
+          {loading ? <Loading /> : <DeskPannel data={result} />}
+          <AddDesk
+            onClose={() => {
+              refetchData();
+            }}
+          />
+        </div>
+      </DeskCtx.Provider>
     </>
   );
 };
