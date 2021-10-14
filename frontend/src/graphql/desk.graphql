@@ -15,3 +15,9 @@ mutation removeDesk($desk_name: String!) {
     message
   }
 }
+mutation editDesk($old_desk_name: String!, $new_desk_name: String!) {
+  editDesk(old_desk_name: $old_desk_name, new_desk_name: $new_desk_name) {
+    path
+    message
+  }
+}

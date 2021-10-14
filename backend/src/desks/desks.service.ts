@@ -73,6 +73,14 @@ export class DeskService {
     old_desk_name: string,
   ): Promise<DeskError> {
     try {
+      await deskValidationSchema.validate({ name: new_desk_name });
+    } catch (error) {
+      return {
+        path: 'new_desk_name',
+        message: error.message,
+      };
+    }
+    try {
       await this.deskRepository.update(
         { name: old_desk_name, user: { user_id: this.context.user_id } },
         { name: new_desk_name },
@@ -80,8 +88,8 @@ export class DeskService {
       return null;
     } catch (error) {
       return {
-        path: 'Internal Error',
-        message: 'Internal Server Error',
+        path: 'new_desk_name',
+        message: 'desk_name already exits',
       };
     }
   }

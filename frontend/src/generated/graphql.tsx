@@ -174,6 +174,14 @@ export type RemoveDeskMutationVariables = Exact<{
 
 export type RemoveDeskMutation = { __typename?: 'Mutation', removeDesk?: { __typename?: 'DeskError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
 
+export type EditDeskMutationVariables = Exact<{
+  old_desk_name: Scalars['String'];
+  new_desk_name: Scalars['String'];
+}>;
+
+
+export type EditDeskMutation = { __typename?: 'Mutation', editDesk?: { __typename?: 'DeskError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
 export type LoginMutationVariables = Exact<{
   loginData: LoginInput;
 }>;
@@ -326,6 +334,41 @@ export function useRemoveDeskMutation(baseOptions?: Apollo.MutationHookOptions<R
 export type RemoveDeskMutationHookResult = ReturnType<typeof useRemoveDeskMutation>;
 export type RemoveDeskMutationResult = Apollo.MutationResult<RemoveDeskMutation>;
 export type RemoveDeskMutationOptions = Apollo.BaseMutationOptions<RemoveDeskMutation, RemoveDeskMutationVariables>;
+export const EditDeskDocument = gql`
+    mutation editDesk($old_desk_name: String!, $new_desk_name: String!) {
+  editDesk(old_desk_name: $old_desk_name, new_desk_name: $new_desk_name) {
+    path
+    message
+  }
+}
+    `;
+export type EditDeskMutationFn = Apollo.MutationFunction<EditDeskMutation, EditDeskMutationVariables>;
+
+/**
+ * __useEditDeskMutation__
+ *
+ * To run a mutation, you first call `useEditDeskMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditDeskMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editDeskMutation, { data, loading, error }] = useEditDeskMutation({
+ *   variables: {
+ *      old_desk_name: // value for 'old_desk_name'
+ *      new_desk_name: // value for 'new_desk_name'
+ *   },
+ * });
+ */
+export function useEditDeskMutation(baseOptions?: Apollo.MutationHookOptions<EditDeskMutation, EditDeskMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditDeskMutation, EditDeskMutationVariables>(EditDeskDocument, options);
+      }
+export type EditDeskMutationHookResult = ReturnType<typeof useEditDeskMutation>;
+export type EditDeskMutationResult = Apollo.MutationResult<EditDeskMutation>;
+export type EditDeskMutationOptions = Apollo.BaseMutationOptions<EditDeskMutation, EditDeskMutationVariables>;
 export const LoginDocument = gql`
     mutation login($loginData: LoginInput!) {
   loginUser(loginData: $loginData) {

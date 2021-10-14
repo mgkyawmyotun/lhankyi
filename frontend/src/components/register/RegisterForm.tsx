@@ -36,7 +36,7 @@ export const RegisterForm: FC = () => {
             const { data } = await createUser({
               variables: { registerData: { email, name, password } },
             });
-            if (data?.createUser?.__typename == 'Token') {
+            if (data?.createUser?.__typename === 'Token') {
               const { token } = data?.createUser as Token;
               if (token) setToken(token);
               history.push('/');

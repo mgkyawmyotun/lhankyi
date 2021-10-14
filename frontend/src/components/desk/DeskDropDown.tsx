@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import styles from '../../scss/desk.module.scss';
 import DotIcon from '../../svg/DotIcon';
 import { DeskDelete } from './DeskDelete';
+import { DeskEdit } from './DeskEdit';
 interface DeskDropDownProps {
   desk_name: string;
 }
@@ -21,7 +22,7 @@ export const DeskDropDown: FC<DeskDropDownProps> = ({ desk_name }) => {
             showDropDown ? styles.dropdown__content__show : '',
           ].join(' ')}
         >
-          <h3 onClick={(e) => {}}>Edit</h3>
+          <DeskEdit desk_name={desk_name} />
           <DeskDelete desk_name={desk_name} />
         </div>
       </div>
