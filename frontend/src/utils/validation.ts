@@ -21,3 +21,7 @@ export const deskSchema = yup.object({
 export const deskEditSchema = yup.object({
   new_desk_name: yup.string().min(3).max(15).required(),
 });
+
+export const cardSchema = yup.object({
+  card_name: yup.string().min(3).max(15).required(),
+});

@@ -117,7 +117,7 @@ export type Query = {
 
 
 export type QueryGetCardsByDeskArgs = {
-  deck_name: Scalars['String'];
+  desk_name: Scalars['String'];
 };
 
 export type RegisterInput = {
@@ -154,6 +154,20 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', getUser: { __typename?: 'User', name?: string | null | undefined, email?: string | null | undefined } };
+
+export type GetCardsByDeskQueryVariables = Exact<{
+  desk_name: Scalars['String'];
+}>;
+
+
+export type GetCardsByDeskQuery = { __typename?: 'Query', getCardsByDesk: Array<{ __typename?: 'Card', card_name: string, card_id: number }> };
+
+export type CreateCardMutationVariables = Exact<{
+  cardInputData: CardInputData;
+}>;
+
+
+export type CreateCardMutation = { __typename?: 'Mutation', createCard?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
 
 export type CreateDeskMutationVariables = Exact<{
   desk_name: Scalars['String'];
@@ -232,6 +246,76 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const GetCardsByDeskDocument = gql`
+    query getCardsByDesk($desk_name: String!) {
+  getCardsByDesk(desk_name: $desk_name) {
+    card_name
+    card_id
+  }
+}
+    `;
+
+/**
+ * __useGetCardsByDeskQuery__
+ *
+ * To run a query within a React component, call `useGetCardsByDeskQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCardsByDeskQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCardsByDeskQuery({
+ *   variables: {
+ *      desk_name: // value for 'desk_name'
+ *   },
+ * });
+ */
+export function useGetCardsByDeskQuery(baseOptions: Apollo.QueryHookOptions<GetCardsByDeskQuery, GetCardsByDeskQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCardsByDeskQuery, GetCardsByDeskQueryVariables>(GetCardsByDeskDocument, options);
+      }
+export function useGetCardsByDeskLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCardsByDeskQuery, GetCardsByDeskQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCardsByDeskQuery, GetCardsByDeskQueryVariables>(GetCardsByDeskDocument, options);
+        }
+export type GetCardsByDeskQueryHookResult = ReturnType<typeof useGetCardsByDeskQuery>;
+export type GetCardsByDeskLazyQueryHookResult = ReturnType<typeof useGetCardsByDeskLazyQuery>;
+export type GetCardsByDeskQueryResult = Apollo.QueryResult<GetCardsByDeskQuery, GetCardsByDeskQueryVariables>;
+export const CreateCardDocument = gql`
+    mutation createCard($cardInputData: CardInputData!) {
+  createCard(cardInputData: $cardInputData) {
+    path
+    message
+  }
+}
+    `;
+export type CreateCardMutationFn = Apollo.MutationFunction<CreateCardMutation, CreateCardMutationVariables>;
+
+/**
+ * __useCreateCardMutation__
+ *
+ * To run a mutation, you first call `useCreateCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCardMutation, { data, loading, error }] = useCreateCardMutation({
+ *   variables: {
+ *      cardInputData: // value for 'cardInputData'
+ *   },
+ * });
+ */
+export function useCreateCardMutation(baseOptions?: Apollo.MutationHookOptions<CreateCardMutation, CreateCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCardMutation, CreateCardMutationVariables>(CreateCardDocument, options);
+      }
+export type CreateCardMutationHookResult = ReturnType<typeof useCreateCardMutation>;
+export type CreateCardMutationResult = Apollo.MutationResult<CreateCardMutation>;
+export type CreateCardMutationOptions = Apollo.BaseMutationOptions<CreateCardMutation, CreateCardMutationVariables>;
 export const CreateDeskDocument = gql`
     mutation createDesk($desk_name: String!) {
   createDesk(desk_name: $desk_name) {

@@ -1,0 +1,12 @@
+query getCardsByDesk($desk_name: String!) {
+  getCardsByDesk(desk_name: $desk_name) {
+    card_name
+    card_id
+  }
+}
+mutation createCard($cardInputData: CardInputData!) {
+  createCard(cardInputData: $cardInputData) {
+    path
+    message
+  }
+}

@@ -9,7 +9,7 @@ export class CardsResolver {
   constructor(private cardsService: CardsService) {}
 
   @Query(returns => [Card], { nullable: false })
-  getCardsByDesk(@Args('deck_name') deck_name: string) {
+  getCardsByDesk(@Args('desk_name') deck_name: string) {
     return this.cardsService.getCardsByDesk(deck_name);
   }
   @Query(returns => [Card], { nullable: false })

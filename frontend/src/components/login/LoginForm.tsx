@@ -24,7 +24,7 @@ export const LoginForm: FC = () => {
             const { data } = await loginUser({
               variables: { loginData: { email, password } },
             });
-            if (data?.loginUser?.__typename == 'Token') {
+            if (data?.loginUser?.__typename === 'Token') {
               const { token } = data?.loginUser as Token;
               if (token) setToken(token);
               history.push('/');

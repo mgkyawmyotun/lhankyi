@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AppCard } from './pages/AppCard';
 import { Login } from './pages/Login';
 import { MainApp } from './pages/MainApp';
 import { Register } from './pages/Register';
@@ -17,6 +18,9 @@ function App() {
           </Route>
           <Route path="/register">
             <Register />
+          </Route>
+          <Route path="/cards/:desk_name">
+            <AppCard />
           </Route>
         </Switch>
       </Router>
