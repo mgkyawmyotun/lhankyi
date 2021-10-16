@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import {
   GetCardsByDeskQuery,
   useGetCardsByDeskQuery,
@@ -12,6 +12,7 @@ export const Card: FC = () => {
   const {
     params: { desk_name },
   } = useRouteMatch<{ desk_name: string }>();
+  const { push } = useHistory();
   const [result, setResult] = useState<GetCardsByDeskQuery | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
   const { data, refetch } = useGetCardsByDeskQuery({
@@ -32,6 +33,13 @@ export const Card: FC = () => {
   return (
     <>
       <div className={styles.app__desk__pannel}>
+        <h1
+          onClick={() => {
+            push('/');
+          }}
+        >
+          Back
+        </h1>
         {loading ? <Loading /> : <CardPannel data={result} />}
         <AddCard
           onClose={() => {

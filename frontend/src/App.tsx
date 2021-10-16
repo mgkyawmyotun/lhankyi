@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AppCard } from './pages/AppCard';
+import { CreateCard } from './pages/CreateCard';
 import { Login } from './pages/Login';
 import { MainApp } from './pages/MainApp';
 import { Register } from './pages/Register';
@@ -21,6 +22,9 @@ function App() {
           </Route>
           <Route path="/cards/:desk_name">
             <AppCard />
+          </Route>
+          <Route path="/create/cards/:card_id">
+            <CreateCard />
           </Route>
         </Switch>
       </Router>
