@@ -1,6 +1,7 @@
 @import 'color';
 /* Basic editor styles */
 .ProseMirror {
+  position: relative;
   max-height: 35vh;
   height: 30vh;
   width: 100%;
@@ -47,7 +48,7 @@
   }
 
   img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
   }
 
@@ -61,4 +62,8 @@
     border-top: 2px solid rgba(#0d0d0d, 0.1);
     margin: 2rem 0;
   }
+}
+
+.is-active {
+  background-color: #0d0d0d;
 }

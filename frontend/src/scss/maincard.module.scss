@@ -6,4 +6,13 @@
   height: 40vh;
   border-radius: 1.5em;
   justify-self: center;
+  overflow: auto;
+  & > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    max-width: 50%;
+    height: auto;
+  }
 }

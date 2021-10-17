@@ -1,120 +1,123 @@
 import { Editor } from '@tiptap/react';
-import React, { FC } from 'react';
-
+import React, { FC, useRef } from 'react';
+import styles from '../../scss/editor.module.scss';
 interface MenuBarProps {
   editor: Editor | null;
 }
-const MenuBar: FC<MenuBarProps> = ({ editor }) => {
+export const EditorMenu: FC<MenuBarProps> = ({ editor }) => {
+  const input_ref = useRef<HTMLInputElement>(null);
   if (!editor) {
     return null;
   }
 
   return (
-    <>
-      <button
+    <div className={styles.menu}>
+      <span
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive('bold') ? 'is-active' : ''}
+        className={editor.isActive('bold') ? styles.active : styles.unactive}
       >
         bold
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive('italic') ? 'is-active' : ''}
+        className={editor.isActive('italic') ? styles.active : ''}
       >
         italic
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={editor.isActive('strike') ? 'is-active' : ''}
-      >
-        strike
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleCode().run()}
-        className={editor.isActive('code') ? 'is-active' : ''}
+        className={editor.isActive('code') ? styles.active : ''}
       >
         code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive('paragraph') ? 'is-active' : ''}
-      >
-        paragraph
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
+        className={
+          editor.isActive('heading', { level: 1 }) ? styles.active : ''
+        }
       >
         h1
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+        className={
+          editor.isActive('heading', { level: 2 }) ? styles.active : ''
+        }
       >
         h2
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+        className={
+          editor.isActive('heading', { level: 3 }) ? styles.active : ''
+        }
       >
         h3
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+        className={
+          editor.isActive('heading', { level: 4 }) ? styles.active : ''
+        }
       >
         h4
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+        className={
+          editor.isActive('heading', { level: 5 }) ? styles.active : ''
+        }
       >
         h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-      >
-        h6
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive('bulletList') ? 'is-active' : ''}
+        className={editor.isActive('bulletList') ? styles.active : ''}
       >
         bullet list
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive('orderedList') ? 'is-active' : ''}
+        className={editor.isActive('orderedList') ? styles.active : ''}
       >
         ordered list
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive('codeBlock') ? 'is-active' : ''}
+        className={editor.isActive('codeBlock') ? styles.active : ''}
       >
         code block
-      </button>
-      <button
+      </span>
+      <span
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive('blockquote') ? 'is-active' : ''}
+        className={editor.isActive('blockquote') ? styles.active : ''}
       >
         blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+      </span>
+      <span onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
+      </span>
+      <span onClick={() => editor.chain().focus().setHardBreak().run()}>
         hard break
-      </button>
-      <button onClick={() => editor.chain().focus().undo().run()}>undo</button>
-      <button onClick={() => editor.chain().focus().redo().run()}>redo</button>
-    </>
+      </span>
+      <span onClick={() => editor.chain().focus().undo().run()}>undo</span>
+      <span onClick={() => editor.chain().focus().redo().run()}>redo</span>
+      <input
+        ref={input_ref}
+        onInput={(e) => {
+          if (input_ref && input_ref.current && input_ref.current.files) {
+            const file = input_ref.current.files[0];
+            if (!file) {
+              return;
+            }
+            input_ref.current.value = '';
+            const img_url = URL.createObjectURL(file);
+            console.log(img_url);
+            editor.chain().focus().setImage({ src: img_url }).run();
+          }
+        }}
+        type="file"
+      />
+    </div>
   );
 };
