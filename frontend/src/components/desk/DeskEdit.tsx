@@ -1,6 +1,5 @@
 import React, { FC, useContext, useState } from 'react';
 import { DeskCtx } from '../../context/DeskContext';
-import { useRemoveDeskMutation } from '../../generated/graphql';
 import { MyModal } from '../Modal';
 import { DeskEditForm } from './DeskEditForm';
 interface DeskEditProps {
@@ -9,8 +8,6 @@ interface DeskEditProps {
 export const DeskEdit: FC<DeskEditProps> = ({ desk_name }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const ctx = useContext(DeskCtx);
-  //   const [] = use;
-  const [removeDesk] = useRemoveDeskMutation();
   return (
     <>
       <h3

@@ -9,6 +9,7 @@ interface InputFormProps {
   name: string;
 }
 export const InputField: FC<InputFormProps> = ({ label, name, type }) => {
+  // eslint-disable-next-line
   const [_, { error, touched }] = useField({ name });
   return (
     <div className={styles.input_field}>

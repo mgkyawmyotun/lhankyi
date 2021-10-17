@@ -28,7 +28,8 @@ export const MyEditor: FC<MyEditorProps> = ({ onInput }) => {
     if (editor) {
       onInput(editor.getHTML());
     }
-  }, [editor && editor.getCharacterCount(), editor && editor.getHTML().length]);
+    // eslint-disable-next-line
+  }, [editor && editor.getHTML().length]);
 
   return (
     <div>

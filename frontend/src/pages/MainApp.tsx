@@ -14,6 +14,7 @@ export const MainApp: FC = () => {
         route.push('/login');
       }
     }
+    // eslint-disable-next-line
   }, [loading, data?.getUser]);
   const route = useHistory();
   return (

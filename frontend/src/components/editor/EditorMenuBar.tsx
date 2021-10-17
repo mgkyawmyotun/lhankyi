@@ -1,6 +1,7 @@
 import { Editor } from '@tiptap/react';
 import React, { FC, useRef } from 'react';
 import styles from '../../scss/editor.module.scss';
+import { getBase64Image } from '../../utils/helper';
 interface MenuBarProps {
   editor: Editor | null;
 }
@@ -111,9 +112,12 @@ export const EditorMenu: FC<MenuBarProps> = ({ editor }) => {
               return;
             }
             input_ref.current.value = '';
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
             const img_url = URL.createObjectURL(file);
-            console.log(img_url);
-            editor.chain().focus().setImage({ src: img_url }).run();
+            getBase64Image(img_url).then((value) => {
+              editor.chain().focus().setImage({ src: value }).run();
+            });
           }
         }}
         type="file"
