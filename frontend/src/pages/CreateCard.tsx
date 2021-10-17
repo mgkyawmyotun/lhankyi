@@ -18,6 +18,7 @@ export const CreateCard: FC = () => {
             }}
           />
         </div>
+        <div>Save</div>
       </div>
     </div>
   );
