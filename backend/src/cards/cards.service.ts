@@ -17,6 +17,13 @@ export class CardsService {
     @InjectRepository(DeskEntity)
     private deskRespository: Repository<DeskEntity>,
   ) {}
+  async getCard(card_id: string) {
+    const card = await this.cardRespository.findOne({
+      relations: ['desk', 'desk.user'],
+      where: { card_id, desk: { user: { user_id: this.context.user_id } } },
+    });
+    return card;
+  }
   async getAllCards() {
     const cards = await this.cardRespository.find({
       relations: ['desk', 'desk.user'],

@@ -8,6 +8,10 @@ import { CardsService } from './cards.service';
 export class CardsResolver {
   constructor(private cardsService: CardsService) {}
 
+  @Query(returns => Card, { nullable: false })
+  getCard(@Args('card_id') card_id: string) {
+    return this.cardsService.getCard(card_id);
+  }
   @Query(returns => [Card], { nullable: false })
   getCardsByDesk(@Args('desk_name') deck_name: string) {
     return this.cardsService.getCardsByDesk(deck_name);

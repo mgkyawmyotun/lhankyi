@@ -4,7 +4,7 @@ import { Desk } from './../desks/desk.model';
 @ObjectType({ implements: DateType })
 export class Card implements DateType {
   @Field()
-  card_id: number;
+  card_id: string;
   @Field()
   card_name: string;
   @Field()
