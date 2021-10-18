@@ -34,3 +34,14 @@ export class CardInputData {
   @Field({ nullable: true, defaultValue: '' })
   card_data_back: string;
 }
+@InputType()
+export class CardEditData {
+  @Field({ nullable: true })
+  card_name: string;
+  @Field({ nullable: true })
+  card_data_front: string;
+  @Field({ nullable: true })
+  card_data_back: string;
+  @Field({ nullable: false })
+  card_id: string;
+}

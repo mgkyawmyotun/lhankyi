@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { AuthGuard } from './../auth.gurad';
-import { Card, CardError, CardInputData } from './card.model';
+import { Card, CardEditData, CardError, CardInputData } from './card.model';
 import { CardsService } from './cards.service';
 @Resolver(of => Card)
 @UseGuards(AuthGuard)
@@ -23,5 +23,9 @@ export class CardsResolver {
   @Mutation(returns => CardError, { nullable: true })
   createCard(@Args('cardInputData') cardInputData: CardInputData) {
     return this.cardsService.createCard(cardInputData);
+  }
+  @Mutation(returns => CardError, { nullable: true })
+  editCard(@Args('cardInputData') cardInputData: CardEditData) {
+    return this.cardsService.editCard(cardInputData);
   }
 }

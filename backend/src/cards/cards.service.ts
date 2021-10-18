@@ -5,8 +5,11 @@ import { Repository } from 'typeorm';
 import { GraphQlContextType } from '../share';
 import { DeskEntity } from './../desks/desk.entity';
 import { CardEntity } from './card.entity';
-import { CardError, CardInputData } from './card.model';
-import { cardValidationSchema } from './card.validation';
+import { CardEditData, CardError, CardInputData } from './card.model';
+import {
+  cardEditValidationSchema,
+  cardValidationSchema,
+} from './card.validation';
 
 @Injectable()
 export class CardsService {
@@ -41,6 +44,40 @@ export class CardsService {
       },
     });
     return cards;
+  }
+  async editCard({
+    card_id,
+    card_name,
+    card_data_front,
+    card_data_back,
+  }: CardEditData) {
+    try {
+      await cardEditValidationSchema.validate({
+        card_name,
+        card_data_back,
+        card_data_front,
+        card_id,
+      });
+    } catch (error) {
+      return {
+        path: error.path,
+        message: error.message,
+      };
+    }
+    try {
+      const res = await this.cardRespository
+        .createQueryBuilder()
+        .update()
+        .set({
+          card_name,
+          card_data_back,
+          card_data_front,
+        })
+        .where('card_id = :id', { id: card_id })
+        .execute();
+    } catch (error) {
+      throw new Error();
+    }
   }
   async createCard({
     card_name,
