@@ -14,6 +14,12 @@ export const MainCard: FC<MainCardProps> = ({ data, onFlipCard }) => {
       <FlipIcon
         onClick={() => {
           if (divRef && divRef.current) {
+            divRef.current.classList.toggle(styles.flip);
+            //remove class when animation is completed so can toggle later for another animation
+            setTimeout(() => {
+              if (divRef && divRef.current)
+                divRef.current.classList.remove(styles.flip);
+            }, 500);
           }
           onFlipCard();
         }}
