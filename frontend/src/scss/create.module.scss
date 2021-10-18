@@ -3,7 +3,7 @@
 .app {
   background-color: $dark-blue;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 }
 .app_container {
   @include container;
@@ -20,4 +20,16 @@
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
   row-gap: 1em;
+}
+
+.save_button {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: $darkest-blue;
+  color: $pure-white;
+  width: min-content;
+  margin: 0 auto;
+  padding: 0.5em 1em;
+  cursor: pointer;
 }
