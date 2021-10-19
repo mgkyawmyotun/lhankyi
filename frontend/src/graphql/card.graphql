@@ -6,10 +6,15 @@ query getCardsByDesk($desk_name: String!) {
 }
 mutation createCard($cardInputData: CardInputData!) {
   createCard(cardInputData: $cardInputData) {
-    path
-    message
+    ... on CardId {
+      card_id
+    }
+    ... on CardError {
+      path
+    }
   }
 }
+
 query getCard($card_id: String!) {
   getCard(card_id: $card_id) {
     card_id

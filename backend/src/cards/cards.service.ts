@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { GraphQlContextType } from '../share';
 import { DeskEntity } from './../desks/desk.entity';
 import { CardEntity } from './card.entity';
-import { CardEditData, CardError, CardInputData } from './card.model';
+import { CardCreateResult, CardEditData, CardInputData } from './card.model';
 import {
   cardEditValidationSchema,
   cardValidationSchema,
@@ -84,7 +84,7 @@ export class CardsService {
     card_data_back,
     card_data_front,
     desk_name,
-  }: CardInputData): Promise<CardError | null> {
+  }: CardInputData): Promise<typeof CardCreateResult> {
     try {
       await cardValidationSchema.validate({
         card_name,
@@ -116,8 +116,8 @@ export class CardsService {
         desk: { name: desk_name, user: { user_id: this.context.user_id } },
       });
 
-      await this.cardRespository.save(card);
-      return null;
+      const card_result = await this.cardRespository.save(card);
+      return { card_id: card_result.card_id };
     } catch (error) {
       return {
         path: 'desk_name',

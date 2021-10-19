@@ -1,8 +1,13 @@
 import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
-import { useCreateCardMutation } from '../../generated/graphql';
+import {
+  CardError,
+  CardId,
+  useCreateCardMutation,
+} from '../../generated/graphql';
 import styles from '../../scss/login.module.scss';
 import { cardSchema } from '../../utils/validation';
 
@@ -12,6 +17,7 @@ interface CardFormProps {
 }
 export const CardForm: FC<CardFormProps> = ({ closeModal, desk_name }) => {
   const [createCard] = useCreateCardMutation();
+  const { push } = useHistory();
   return (
     <>
       <div className={styles.form}>
@@ -21,14 +27,21 @@ export const CardForm: FC<CardFormProps> = ({ closeModal, desk_name }) => {
           }}
           validationSchema={cardSchema}
           onSubmit={async ({ card_name }, { setErrors }) => {
-            const desk_result = await createCard({
+            const card_result = await createCard({
               variables: { cardInputData: { desk_name, card_name } },
             });
-            if (desk_result.data && desk_result.data.createCard) {
-              setErrors({
-                [desk_result.data.createCard.path || '']:
-                  desk_result.data.createCard.message,
-              });
+            if (card_result.data && card_result.data.createCard) {
+              if (card_result.data.createCard.__typename === 'CardError') {
+                const error = card_result.data.createCard as CardError;
+
+                setErrors({
+                  [error.path || '']: error.message,
+                });
+              } else {
+                closeModal();
+                const { card_id } = card_result.data.createCard as CardId;
+                push('/create/cards/' + card_id);
+              }
             } else {
               closeModal();
             }

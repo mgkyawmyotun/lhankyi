@@ -27,6 +27,8 @@ export type Card = DateType & {
   updated_at: Scalars['DateTime'];
 };
 
+export type CardCreateResult = CardError | CardId;
+
 export type CardEditData = {
   card_data_back?: Maybe<Scalars['String']>;
   card_data_front?: Maybe<Scalars['String']>;
@@ -38,6 +40,11 @@ export type CardError = {
   __typename?: 'CardError';
   message?: Maybe<Scalars['String']>;
   path?: Maybe<Scalars['String']>;
+};
+
+export type CardId = {
+  __typename?: 'CardId';
+  card_id?: Maybe<Scalars['String']>;
 };
 
 export type CardInputData = {
@@ -74,7 +81,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCard?: Maybe<CardError>;
+  createCard?: Maybe<CardCreateResult>;
   createDesk?: Maybe<DeskError>;
   createUser?: Maybe<UserCreateResult>;
   editCard?: Maybe<CardError>;
@@ -186,7 +193,7 @@ export type CreateCardMutationVariables = Exact<{
 }>;
 
 
-export type CreateCardMutation = { __typename?: 'Mutation', createCard?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+export type CreateCardMutation = { __typename?: 'Mutation', createCard?: { __typename?: 'CardError', path?: string | null | undefined } | { __typename?: 'CardId', card_id?: string | null | undefined } | null | undefined };
 
 export type GetCardQueryVariables = Exact<{
   card_id: Scalars['String'];
@@ -318,8 +325,12 @@ export type GetCardsByDeskQueryResult = Apollo.QueryResult<GetCardsByDeskQuery, 
 export const CreateCardDocument = gql`
     mutation createCard($cardInputData: CardInputData!) {
   createCard(cardInputData: $cardInputData) {
-    path
-    message
+    ... on CardId {
+      card_id
+    }
+    ... on CardError {
+      path
+    }
   }
 }
     `;

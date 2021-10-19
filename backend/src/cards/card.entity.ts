@@ -11,7 +11,7 @@ import { DeskEntity } from './../desks/desk.entity';
 @Entity({ name: 'card' })
 export class CardEntity {
   @PrimaryGeneratedColumn('uuid')
-  card_id: number;
+  card_id: string;
   @Column({ type: 'varchar', length: 20 })
   card_name: string;
   @Column({ type: 'text' })

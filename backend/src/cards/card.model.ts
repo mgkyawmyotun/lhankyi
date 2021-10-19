@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { DateType } from '../share';
 import { Desk } from './../desks/desk.model';
 @ObjectType({ implements: DateType })
@@ -45,3 +45,22 @@ export class CardEditData {
   @Field({ nullable: false })
   card_id: string;
 }
+
+@ObjectType()
+export class CardId {
+  @Field({ nullable: true })
+  card_id: string;
+}
+export const CardCreateResult: CardId | CardError = createUnionType({
+  name: 'CardCreateResult',
+  types: () => [CardId, CardError],
+  resolveType(value) {
+    if (value.card_id) {
+      return CardId;
+    }
+    if (value.path || value.message) {
+      return CardError;
+    }
+    return null;
+  },
+});

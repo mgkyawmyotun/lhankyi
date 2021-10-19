@@ -39,6 +39,7 @@ export const CreateCard: FC = () => {
         };
       });
     }
+    //eslint-disable-next-line
   }, [data, loading]);
 
   const editor = useEditor({
