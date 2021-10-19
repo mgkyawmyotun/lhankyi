@@ -11,8 +11,8 @@ export const CardPannel: FC<CardPannelProps> = ({ data }) => {
   return (
     <div className={styles.card__pannel}>
       {data &&
-        data.getCardsByDesk?.map(({ card_name }, index) => (
-          <CardStyle key={index} name={card_name}></CardStyle>
+        data.getCardsByDesk?.map(({ card_name, card_id }, index) => (
+          <CardStyle key={card_id} name={card_name} id={card_id}></CardStyle>
         ))}
     </div>
   );

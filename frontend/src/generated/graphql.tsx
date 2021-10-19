@@ -20,11 +20,18 @@ export type Card = DateType & {
   __typename?: 'Card';
   card_data_back: Scalars['String'];
   card_data_front: Scalars['String'];
-  card_id: Scalars['Float'];
+  card_id: Scalars['String'];
   card_name: Scalars['String'];
   created_at: Scalars['DateTime'];
   desk: Desk;
   updated_at: Scalars['DateTime'];
+};
+
+export type CardEditData = {
+  card_data_back?: Maybe<Scalars['String']>;
+  card_data_front?: Maybe<Scalars['String']>;
+  card_id: Scalars['String'];
+  card_name?: Maybe<Scalars['String']>;
 };
 
 export type CardError = {
@@ -70,6 +77,7 @@ export type Mutation = {
   createCard?: Maybe<CardError>;
   createDesk?: Maybe<DeskError>;
   createUser?: Maybe<UserCreateResult>;
+  editCard?: Maybe<CardError>;
   editDesk?: Maybe<DeskError>;
   loginUser: UserCreateResult;
   removeDesk?: Maybe<DeskError>;
@@ -91,6 +99,11 @@ export type MutationCreateUserArgs = {
 };
 
 
+export type MutationEditCardArgs = {
+  cardInputData: CardEditData;
+};
+
+
 export type MutationEditDeskArgs = {
   new_desk_name: Scalars['String'];
   old_desk_name: Scalars['String'];
@@ -109,10 +122,16 @@ export type MutationRemoveDeskArgs = {
 export type Query = {
   __typename?: 'Query';
   getAllCards: Array<Card>;
+  getCard: Card;
   getCardsByDesk: Array<Card>;
   getDesks?: Maybe<Array<Desk>>;
   getUser: User;
   getUsers?: Maybe<Array<User>>;
+};
+
+
+export type QueryGetCardArgs = {
+  card_id: Scalars['String'];
 };
 
 
@@ -160,7 +179,7 @@ export type GetCardsByDeskQueryVariables = Exact<{
 }>;
 
 
-export type GetCardsByDeskQuery = { __typename?: 'Query', getCardsByDesk: Array<{ __typename?: 'Card', card_name: string, card_id: number }> };
+export type GetCardsByDeskQuery = { __typename?: 'Query', getCardsByDesk: Array<{ __typename?: 'Card', card_name: string, card_id: string }> };
 
 export type CreateCardMutationVariables = Exact<{
   cardInputData: CardInputData;
@@ -168,6 +187,20 @@ export type CreateCardMutationVariables = Exact<{
 
 
 export type CreateCardMutation = { __typename?: 'Mutation', createCard?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
+export type GetCardQueryVariables = Exact<{
+  card_id: Scalars['String'];
+}>;
+
+
+export type GetCardQuery = { __typename?: 'Query', getCard: { __typename?: 'Card', card_id: string, card_data_front: string, card_data_back: string, card_name: string, desk: { __typename?: 'Desk', name?: string | null | undefined } } };
+
+export type EditCardMutationVariables = Exact<{
+  cardInputData: CardEditData;
+}>;
+
+
+export type EditCardMutation = { __typename?: 'Mutation', editCard?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
 
 export type CreateDeskMutationVariables = Exact<{
   desk_name: Scalars['String'];
@@ -316,6 +349,81 @@ export function useCreateCardMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateCardMutationHookResult = ReturnType<typeof useCreateCardMutation>;
 export type CreateCardMutationResult = Apollo.MutationResult<CreateCardMutation>;
 export type CreateCardMutationOptions = Apollo.BaseMutationOptions<CreateCardMutation, CreateCardMutationVariables>;
+export const GetCardDocument = gql`
+    query getCard($card_id: String!) {
+  getCard(card_id: $card_id) {
+    card_id
+    card_data_front
+    card_data_back
+    card_name
+    desk {
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCardQuery__
+ *
+ * To run a query within a React component, call `useGetCardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCardQuery({
+ *   variables: {
+ *      card_id: // value for 'card_id'
+ *   },
+ * });
+ */
+export function useGetCardQuery(baseOptions: Apollo.QueryHookOptions<GetCardQuery, GetCardQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCardQuery, GetCardQueryVariables>(GetCardDocument, options);
+      }
+export function useGetCardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCardQuery, GetCardQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCardQuery, GetCardQueryVariables>(GetCardDocument, options);
+        }
+export type GetCardQueryHookResult = ReturnType<typeof useGetCardQuery>;
+export type GetCardLazyQueryHookResult = ReturnType<typeof useGetCardLazyQuery>;
+export type GetCardQueryResult = Apollo.QueryResult<GetCardQuery, GetCardQueryVariables>;
+export const EditCardDocument = gql`
+    mutation editCard($cardInputData: CardEditData!) {
+  editCard(cardInputData: $cardInputData) {
+    path
+    message
+  }
+}
+    `;
+export type EditCardMutationFn = Apollo.MutationFunction<EditCardMutation, EditCardMutationVariables>;
+
+/**
+ * __useEditCardMutation__
+ *
+ * To run a mutation, you first call `useEditCardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditCardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editCardMutation, { data, loading, error }] = useEditCardMutation({
+ *   variables: {
+ *      cardInputData: // value for 'cardInputData'
+ *   },
+ * });
+ */
+export function useEditCardMutation(baseOptions?: Apollo.MutationHookOptions<EditCardMutation, EditCardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditCardMutation, EditCardMutationVariables>(EditCardDocument, options);
+      }
+export type EditCardMutationHookResult = ReturnType<typeof useEditCardMutation>;
+export type EditCardMutationResult = Apollo.MutationResult<EditCardMutation>;
+export type EditCardMutationOptions = Apollo.BaseMutationOptions<EditCardMutation, EditCardMutationVariables>;
 export const CreateDeskDocument = gql`
     mutation createDesk($desk_name: String!) {
   createDesk(desk_name: $desk_name) {

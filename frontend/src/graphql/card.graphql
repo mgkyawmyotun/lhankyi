@@ -10,3 +10,20 @@ mutation createCard($cardInputData: CardInputData!) {
     message
   }
 }
+query getCard($card_id: String!) {
+  getCard(card_id: $card_id) {
+    card_id
+    card_data_front
+    card_data_back
+    card_name
+    desk {
+      name
+    }
+  }
+}
+mutation editCard($cardInputData: CardEditData!) {
+  editCard(cardInputData: $cardInputData) {
+    path
+    message
+  }
+}
