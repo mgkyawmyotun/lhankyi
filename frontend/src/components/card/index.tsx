@@ -8,6 +8,8 @@ import styles from '../../scss/card.module.scss';
 import { Loading } from '../Loading';
 import { AddCard } from './AddCard';
 import { CardPannel } from './CardPannel';
+import { PlayButton } from './PlayButton';
+
 export const Card: FC = () => {
   const {
     params: { desk_name },
@@ -41,6 +43,7 @@ export const Card: FC = () => {
           Back
         </h1>
         {loading ? <Loading /> : <CardPannel data={result} />}
+        <PlayButton />
         <AddCard
           onClose={() => {
             refetchData();
