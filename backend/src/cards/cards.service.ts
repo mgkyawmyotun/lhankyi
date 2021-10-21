@@ -5,7 +5,12 @@ import { Repository } from 'typeorm';
 import { GraphQlContextType } from '../share';
 import { DeskEntity } from './../desks/desk.entity';
 import { CardEntity } from './card.entity';
-import { CardCreateResult, CardEditData, CardInputData } from './card.model';
+import {
+  CardCreateResult,
+  CardEditData,
+  CardError,
+  CardInputData,
+} from './card.model';
 import {
   cardEditValidationSchema,
   cardValidationSchema,
@@ -20,6 +25,39 @@ export class CardsService {
     @InjectRepository(DeskEntity)
     private deskRespository: Repository<DeskEntity>,
   ) {}
+  async setPlayableDate(
+    card_id: string,
+    date: Date,
+  ): Promise<CardError | null> {
+    try {
+      const card_exits = await this.deskRespository
+        .createQueryBuilder('desk')
+        .leftJoinAndSelect('desk.user', 'user')
+        .leftJoinAndSelect('desk.cards', 'cards')
+        .where('user.user_id = :user_id', { user_id: this.context.user_id })
+        .andWhere('cards.card_id = :card_id', { card_id })
+        .execute();
+
+      if (card_exits.length == 0) {
+        throw new Error();
+      }
+
+      await this.cardRespository
+        .createQueryBuilder('card')
+        .update()
+        .set({ playable_in: date })
+        .where('card.card_id = :card_id', { card_id })
+        .execute();
+
+      return null;
+    } catch (error) {
+      return {
+        path: 'card',
+        message: "card_does't_exits",
+      };
+    }
+  }
+
   async getCard(card_id: string) {
     const card = await this.cardRespository.findOne({
       relations: ['desk', 'desk.user'],
@@ -27,6 +65,7 @@ export class CardsService {
     });
     return card;
   }
+
   async getAllCards() {
     const cards = await this.cardRespository.find({
       relations: ['desk', 'desk.user'],
@@ -65,7 +104,18 @@ export class CardsService {
       };
     }
     try {
-      const res = await this.cardRespository
+      const card_exits = await this.deskRespository
+        .createQueryBuilder('desk')
+        .leftJoinAndSelect('desk.user', 'user')
+        .leftJoinAndSelect('desk.cards', 'cards')
+        .where('user.user_id = :user_id', { user_id: this.context.user_id })
+        .andWhere('cards.card_id = :card_id', { card_id })
+        .execute();
+
+      if (card_exits.length == 0) {
+        throw new Error();
+      }
+      await this.cardRespository
         .createQueryBuilder()
         .update()
         .set({
@@ -76,7 +126,7 @@ export class CardsService {
         .where('card_id = :id', { id: card_id })
         .execute();
     } catch (error) {
-      throw new Error();
+      return { path: 'card', message: 'card not exits' };
     }
   }
   async createCard({

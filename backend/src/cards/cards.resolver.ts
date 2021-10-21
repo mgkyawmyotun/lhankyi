@@ -34,4 +34,8 @@ export class CardsResolver {
   editCard(@Args('cardInputData') cardInputData: CardEditData) {
     return this.cardsService.editCard(cardInputData);
   }
+  @Mutation(returns => CardError, { nullable: true })
+  setPlayableTime(@Args('card_id') card_id: string, @Args('date') date: Date) {
+    return this.cardsService.setPlayableDate(card_id, date);
+  }
 }

@@ -18,6 +18,8 @@ export class CardEntity {
   card_data_front: string;
   @Column({ type: 'text' })
   card_data_back: string;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  playable_in: Date;
   @CreateDateColumn()
   created_at: Date;
   @UpdateDateColumn()

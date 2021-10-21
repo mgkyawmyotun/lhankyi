@@ -1,0 +1,16 @@
+@import 'utils';
+@import 'color';
+.app {
+  background-color: $dark-blue;
+  width: 100%;
+  min-height: 100vh;
+}
+.app_container {
+  @include container;
+  & > h1 {
+    text-align: center;
+    color: $thin-blue;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

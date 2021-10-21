@@ -12,6 +12,9 @@ export class Card implements DateType {
   @Field()
   card_data_back: string;
   @Field()
+  playable_in: Date;
+
+  @Field()
   desk: Desk;
   updated_at: Date;
   created_at: Date;
