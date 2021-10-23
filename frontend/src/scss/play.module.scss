@@ -14,3 +14,21 @@
     text-transform: uppercase;
   }
 }
+.play {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 4em 1em;
+  align-items: center;
+}
+.play__card {
+  width: 50%;
+  height: 40vh;
+  background-color: $pure-white;
+  border-radius: 1em;
+  padding: 2em 1em;
+}
+.play__buttons {
+  width: 100%;
+}

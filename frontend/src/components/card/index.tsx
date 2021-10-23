@@ -43,7 +43,7 @@ export const Card: FC = () => {
           Back
         </h1>
         {loading ? <Loading /> : <CardPannel data={result} />}
-        <PlayButton />
+        <PlayButton desk_name={desk_name} />
         <AddCard
           onClose={() => {
             refetchData();

@@ -3,6 +3,7 @@ import { CONTEXT } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GraphQlContextType } from '../share';
+import { User } from '../users/user.entity';
 import { DeskEntity } from './../desks/desk.entity';
 import { CardEntity } from './card.entity';
 import {
@@ -24,6 +25,8 @@ export class CardsService {
     @Inject(CONTEXT) private context: GraphQlContextType,
     @InjectRepository(DeskEntity)
     private deskRespository: Repository<DeskEntity>,
+    @InjectRepository(User)
+    private userRespository: Repository<User>,
   ) {}
   async setPlayableDate(
     card_id: string,
@@ -57,7 +60,37 @@ export class CardsService {
       };
     }
   }
+  private getFilterCard(cards: CardEntity[]) {
+    const now = new Date().getTime();
+    return cards.filter(card => card.playable_in.getTime() <= now);
+  }
 
+  async getPlayAbleCards() {
+    try {
+      const cards = await this.getAllCards();
+      return this.getFilterCard(cards);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getPlayAbleCardsByDesk(desk_name: string) {
+    try {
+      const cards = await this.getCardsByDesk(desk_name);
+      return this.getFilterCard(cards);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async getPlayAbleCardsCount() {
+    const cards = await this.getPlayAbleCards();
+    return cards.length;
+  }
+  async getPlayAbleCardsByDeskCount(desk_name: string) {
+    const cards = await this.getPlayAbleCardsByDesk(desk_name);
+    return cards.length;
+  }
   async getCard(card_id: string) {
     const card = await this.cardRespository.findOne({
       relations: ['desk', 'desk.user'],
@@ -74,15 +107,13 @@ export class CardsService {
     return cards;
   }
   async getCardsByDesk(desk_name: string) {
-    try {
-    } catch (error) {}
     const cards = await this.cardRespository.find({
       relations: ['desk', 'desk.user'],
       where: {
-        desk: { user: { user_id: this.context.user_id }, name: desk_name },
+        desk: { user: { user_id: this.context.user_id } },
       },
     });
-    return cards;
+    return cards.filter(card => card.desk.name === desk_name);
   }
   async editCard({
     card_id,
