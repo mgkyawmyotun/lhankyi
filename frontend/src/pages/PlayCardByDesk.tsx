@@ -16,7 +16,7 @@ export type CardType = {
 interface PlayCardByDeskProps {}
 export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
   const { params } = useRouteMatch<{ desk_name: string }>();
-  const { data } = useGetPlayAbleCardsByDeskQuery({
+  const { data, refetch } = useGetPlayAbleCardsByDeskQuery({
     variables: { desk_name: params.desk_name },
   });
   const [currentCard, setCurrentCard] = useState<CardType>();
@@ -43,6 +43,11 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
               showBack={showBack}
               setShowBack={setShowBack}
               card_id={currentCard.card_id}
+              onMoveNextCard={async () => {
+                const { data } = await refetch({ desk_name: params.desk_name });
+                setCurrentCard(data.getPlayAbleCardsByDesk[0]);
+                setShowBack(false);
+              }}
             />
           </div>
         )}

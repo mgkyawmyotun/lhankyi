@@ -7,26 +7,28 @@ interface PlayFooterButtonProps {
   showBack: boolean;
   setShowBack: React.Dispatch<React.SetStateAction<boolean>>;
   card_id: string;
+  onMoveNextCard: () => void;
 }
 export const PlayFooterButton: FC<PlayFooterButtonProps> = ({
   showBack,
   setShowBack,
   card_id,
+  onMoveNextCard,
 }) => {
   const [setPlayAbleTime] = useSetPlayableTimeMutation();
   async function setTime(time: 'vg' | 'g' | 'b' | 'vb') {
     const now_date = new Date();
     let new_date;
-    if (time == 'vg') {
+    if (time === 'vg') {
       new_date = moment(now_date).add(2, 'days');
     }
-    if (time == 'g') {
+    if (time === 'g') {
       new_date = moment(now_date).add(1, 'day');
     }
-    if (time == 'b') {
+    if (time === 'b') {
       new_date = moment(now_date).add(10, 'minute');
     }
-    if (time == 'vb') {
+    if (time === 'vb') {
       new_date = moment(now_date).add(2, 'minute');
     }
     if (new_date) {
@@ -34,6 +36,7 @@ export const PlayFooterButton: FC<PlayFooterButtonProps> = ({
         await setPlayAbleTime({
           variables: { card_id, date: new_date.toDate() },
         });
+        onMoveNextCard();
       } catch (error) {}
     }
   }
