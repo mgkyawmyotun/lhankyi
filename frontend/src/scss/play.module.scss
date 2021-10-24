@@ -135,3 +135,19 @@
     }
   }
 }
+
+.outofcards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10em;
+  & > h1 {
+    color: $thin-blue;
+    margin-right: 1em;
+  }
+  & > h3 {
+    color: $pure-white;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

@@ -131,4 +131,21 @@
     width: 2em;
     height: 2em;
   }
+  & > .count {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -30%);
+
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: $pure-white;
+    background-color: $nice-red;
+    padding: 0.2em 0.2em;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+  }
 }

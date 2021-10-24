@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
 import { Card, PlayFooterButton } from '../components/play';
 import { useGetPlayAbleCardsByDeskQuery } from '../generated/graphql';
@@ -19,6 +19,7 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
   const { data, refetch } = useGetPlayAbleCardsByDeskQuery({
     variables: { desk_name: params.desk_name },
   });
+  const { goBack } = useHistory();
   const [currentCard, setCurrentCard] = useState<CardType>();
   useEffect(() => {
     if (data) {
@@ -31,7 +32,7 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
     <div className={styles.app}>
       <div className={styles.app_container}>
         <NavBar />
-        {currentCard && (
+        {currentCard ? (
           <div className={styles.play}>
             <Card
               card_back_data={currentCard.card_data_back}
@@ -49,6 +50,17 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
                 setShowBack(false);
               }}
             />
+          </div>
+        ) : (
+          <div className={styles.outofcards}>
+            <h1>Completed</h1>
+            <h3
+              onClick={() => {
+                goBack();
+              }}
+            >
+              Go Back
+            </h3>
           </div>
         )}
       </div>

@@ -246,6 +246,13 @@ export type GetPlayAbleCardsByDeskQueryVariables = Exact<{
 
 export type GetPlayAbleCardsByDeskQuery = { __typename?: 'Query', getPlayAbleCardsByDesk: Array<{ __typename?: 'Card', card_id: string, card_name: string, card_data_front: string, card_data_back: string, playable_in: any }> };
 
+export type GetPlayAbleCardsByDeskCountQueryVariables = Exact<{
+  desk_name: Scalars['String'];
+}>;
+
+
+export type GetPlayAbleCardsByDeskCountQuery = { __typename?: 'Query', getPlayAbleCardsByDeskCount: number };
+
 export type CreateDeskMutationVariables = Exact<{
   desk_name: Scalars['String'];
 }>;
@@ -546,6 +553,39 @@ export function useGetPlayAbleCardsByDeskLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetPlayAbleCardsByDeskQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskQuery>;
 export type GetPlayAbleCardsByDeskLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskLazyQuery>;
 export type GetPlayAbleCardsByDeskQueryResult = Apollo.QueryResult<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>;
+export const GetPlayAbleCardsByDeskCountDocument = gql`
+    query getPlayAbleCardsByDeskCount($desk_name: String!) {
+  getPlayAbleCardsByDeskCount(desk_name: $desk_name)
+}
+    `;
+
+/**
+ * __useGetPlayAbleCardsByDeskCountQuery__
+ *
+ * To run a query within a React component, call `useGetPlayAbleCardsByDeskCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlayAbleCardsByDeskCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlayAbleCardsByDeskCountQuery({
+ *   variables: {
+ *      desk_name: // value for 'desk_name'
+ *   },
+ * });
+ */
+export function useGetPlayAbleCardsByDeskCountQuery(baseOptions: Apollo.QueryHookOptions<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>(GetPlayAbleCardsByDeskCountDocument, options);
+      }
+export function useGetPlayAbleCardsByDeskCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>(GetPlayAbleCardsByDeskCountDocument, options);
+        }
+export type GetPlayAbleCardsByDeskCountQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskCountQuery>;
+export type GetPlayAbleCardsByDeskCountLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskCountLazyQuery>;
+export type GetPlayAbleCardsByDeskCountQueryResult = Apollo.QueryResult<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>;
 export const CreateDeskDocument = gql`
     mutation createDesk($desk_name: String!) {
   createDesk(desk_name: $desk_name) {
