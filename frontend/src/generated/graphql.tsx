@@ -253,6 +253,16 @@ export type GetPlayAbleCardsByDeskCountQueryVariables = Exact<{
 
 export type GetPlayAbleCardsByDeskCountQuery = { __typename?: 'Query', getPlayAbleCardsByDeskCount: number };
 
+export type GetPlayAbleCardsCountQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlayAbleCardsCountQuery = { __typename?: 'Query', getPlayAbleCardsCount: number };
+
+export type GetPlayAbleCardsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPlayAbleCardsQuery = { __typename?: 'Query', getPlayAbleCards: Array<{ __typename?: 'Card', card_id: string, card_name: string, card_data_front: string, card_data_back: string, playable_in: any }> };
+
 export type CreateDeskMutationVariables = Exact<{
   desk_name: Scalars['String'];
 }>;
@@ -586,6 +596,76 @@ export function useGetPlayAbleCardsByDeskCountLazyQuery(baseOptions?: Apollo.Laz
 export type GetPlayAbleCardsByDeskCountQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskCountQuery>;
 export type GetPlayAbleCardsByDeskCountLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskCountLazyQuery>;
 export type GetPlayAbleCardsByDeskCountQueryResult = Apollo.QueryResult<GetPlayAbleCardsByDeskCountQuery, GetPlayAbleCardsByDeskCountQueryVariables>;
+export const GetPlayAbleCardsCountDocument = gql`
+    query getPlayAbleCardsCount {
+  getPlayAbleCardsCount
+}
+    `;
+
+/**
+ * __useGetPlayAbleCardsCountQuery__
+ *
+ * To run a query within a React component, call `useGetPlayAbleCardsCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlayAbleCardsCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlayAbleCardsCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPlayAbleCardsCountQuery(baseOptions?: Apollo.QueryHookOptions<GetPlayAbleCardsCountQuery, GetPlayAbleCardsCountQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlayAbleCardsCountQuery, GetPlayAbleCardsCountQueryVariables>(GetPlayAbleCardsCountDocument, options);
+      }
+export function useGetPlayAbleCardsCountLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlayAbleCardsCountQuery, GetPlayAbleCardsCountQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlayAbleCardsCountQuery, GetPlayAbleCardsCountQueryVariables>(GetPlayAbleCardsCountDocument, options);
+        }
+export type GetPlayAbleCardsCountQueryHookResult = ReturnType<typeof useGetPlayAbleCardsCountQuery>;
+export type GetPlayAbleCardsCountLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsCountLazyQuery>;
+export type GetPlayAbleCardsCountQueryResult = Apollo.QueryResult<GetPlayAbleCardsCountQuery, GetPlayAbleCardsCountQueryVariables>;
+export const GetPlayAbleCardsDocument = gql`
+    query getPlayAbleCards {
+  getPlayAbleCards {
+    card_id
+    card_name
+    card_data_front
+    card_data_back
+    playable_in
+  }
+}
+    `;
+
+/**
+ * __useGetPlayAbleCardsQuery__
+ *
+ * To run a query within a React component, call `useGetPlayAbleCardsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlayAbleCardsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlayAbleCardsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPlayAbleCardsQuery(baseOptions?: Apollo.QueryHookOptions<GetPlayAbleCardsQuery, GetPlayAbleCardsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlayAbleCardsQuery, GetPlayAbleCardsQueryVariables>(GetPlayAbleCardsDocument, options);
+      }
+export function useGetPlayAbleCardsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlayAbleCardsQuery, GetPlayAbleCardsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlayAbleCardsQuery, GetPlayAbleCardsQueryVariables>(GetPlayAbleCardsDocument, options);
+        }
+export type GetPlayAbleCardsQueryHookResult = ReturnType<typeof useGetPlayAbleCardsQuery>;
+export type GetPlayAbleCardsLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsLazyQuery>;
+export type GetPlayAbleCardsQueryResult = Apollo.QueryResult<GetPlayAbleCardsQuery, GetPlayAbleCardsQueryVariables>;
 export const CreateDeskDocument = gql`
     mutation createDesk($desk_name: String!) {
   createDesk(desk_name: $desk_name) {

@@ -53,3 +53,16 @@ query getPlayAbleCardsByDesk($desk_name: String!) {
 query getPlayAbleCardsByDeskCount($desk_name: String!) {
   getPlayAbleCardsByDeskCount(desk_name: $desk_name)
 }
+
+query getPlayAbleCardsCount {
+  getPlayAbleCardsCount
+}
+query getPlayAbleCards {
+  getPlayAbleCards {
+    card_id
+    card_name
+    card_data_front
+    card_data_back
+    playable_in
+  }
+}

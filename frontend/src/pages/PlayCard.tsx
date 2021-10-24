@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
 import { Card, PlayFooterButton } from '../components/play';
-import { useGetPlayAbleCardsByDeskQuery } from '../generated/graphql';
+import { useGetPlayAbleCardsQuery } from '../generated/graphql';
 import styles from '../scss/play.module.scss';
 
 export type CardType = {
@@ -13,18 +13,15 @@ export type CardType = {
   card_data_back: string;
   playable_in: any;
 };
-interface PlayCardByDeskProps {}
-export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
-  const { params } = useRouteMatch<{ desk_name: string }>();
-  const { data, refetch } = useGetPlayAbleCardsByDeskQuery({
-    variables: { desk_name: params.desk_name },
+export const PlayCard: FC = () => {
+  const { data, refetch } = useGetPlayAbleCardsQuery({
     fetchPolicy: 'network-only',
   });
   const { goBack } = useHistory();
   const [currentCard, setCurrentCard] = useState<CardType>();
   useEffect(() => {
     if (data) {
-      setCurrentCard(data.getPlayAbleCardsByDesk[0]);
+      setCurrentCard(data.getPlayAbleCards[0]);
     }
   }, [data]);
   const [showBack, setShowBack] = useState<boolean>(false);
@@ -46,8 +43,8 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
               setShowBack={setShowBack}
               card_id={currentCard.card_id}
               onMoveNextCard={async () => {
-                const { data } = await refetch({ desk_name: params.desk_name });
-                setCurrentCard(data.getPlayAbleCardsByDesk[0]);
+                const { data } = await refetch();
+                setCurrentCard(data.getPlayAbleCards[0]);
                 setShowBack(false);
               }}
             />
