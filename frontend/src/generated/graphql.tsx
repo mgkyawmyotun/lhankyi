@@ -24,6 +24,7 @@ export type Card = DateType & {
   card_name: Scalars['String'];
   created_at: Scalars['DateTime'];
   desk: Desk;
+  playable_in: Scalars['DateTime'];
   updated_at: Scalars['DateTime'];
 };
 
@@ -88,6 +89,7 @@ export type Mutation = {
   editDesk?: Maybe<DeskError>;
   loginUser: UserCreateResult;
   removeDesk?: Maybe<DeskError>;
+  setPlayableTime?: Maybe<CardError>;
 };
 
 
@@ -126,12 +128,22 @@ export type MutationRemoveDeskArgs = {
   desk_name: Scalars['String'];
 };
 
+
+export type MutationSetPlayableTimeArgs = {
+  card_id: Scalars['String'];
+  date: Scalars['DateTime'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAllCards: Array<Card>;
   getCard: Card;
   getCardsByDesk: Array<Card>;
   getDesks?: Maybe<Array<Desk>>;
+  getPlayAbleCards: Array<Card>;
+  getPlayAbleCardsByDesk: Array<Card>;
+  getPlayAbleCardsByDeskCount: Scalars['Float'];
+  getPlayAbleCardsCount: Scalars['Float'];
   getUser: User;
   getUsers?: Maybe<Array<User>>;
 };
@@ -143,6 +155,16 @@ export type QueryGetCardArgs = {
 
 
 export type QueryGetCardsByDeskArgs = {
+  desk_name: Scalars['String'];
+};
+
+
+export type QueryGetPlayAbleCardsByDeskArgs = {
+  desk_name: Scalars['String'];
+};
+
+
+export type QueryGetPlayAbleCardsByDeskCountArgs = {
   desk_name: Scalars['String'];
 };
 
@@ -208,6 +230,21 @@ export type EditCardMutationVariables = Exact<{
 
 
 export type EditCardMutation = { __typename?: 'Mutation', editCard?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
+export type SetPlayableTimeMutationVariables = Exact<{
+  card_id: Scalars['String'];
+  date: Scalars['DateTime'];
+}>;
+
+
+export type SetPlayableTimeMutation = { __typename?: 'Mutation', setPlayableTime?: { __typename?: 'CardError', path?: string | null | undefined, message?: string | null | undefined } | null | undefined };
+
+export type GetPlayAbleCardsByDeskQueryVariables = Exact<{
+  desk_name: Scalars['String'];
+}>;
+
+
+export type GetPlayAbleCardsByDeskQuery = { __typename?: 'Query', getPlayAbleCardsByDesk: Array<{ __typename?: 'Card', card_id: string, card_name: string, card_data_front: string, card_data_back: string, playable_in: any }> };
 
 export type CreateDeskMutationVariables = Exact<{
   desk_name: Scalars['String'];
@@ -435,6 +472,80 @@ export function useEditCardMutation(baseOptions?: Apollo.MutationHookOptions<Edi
 export type EditCardMutationHookResult = ReturnType<typeof useEditCardMutation>;
 export type EditCardMutationResult = Apollo.MutationResult<EditCardMutation>;
 export type EditCardMutationOptions = Apollo.BaseMutationOptions<EditCardMutation, EditCardMutationVariables>;
+export const SetPlayableTimeDocument = gql`
+    mutation setPlayableTime($card_id: String!, $date: DateTime!) {
+  setPlayableTime(card_id: $card_id, date: $date) {
+    path
+    message
+  }
+}
+    `;
+export type SetPlayableTimeMutationFn = Apollo.MutationFunction<SetPlayableTimeMutation, SetPlayableTimeMutationVariables>;
+
+/**
+ * __useSetPlayableTimeMutation__
+ *
+ * To run a mutation, you first call `useSetPlayableTimeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetPlayableTimeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setPlayableTimeMutation, { data, loading, error }] = useSetPlayableTimeMutation({
+ *   variables: {
+ *      card_id: // value for 'card_id'
+ *      date: // value for 'date'
+ *   },
+ * });
+ */
+export function useSetPlayableTimeMutation(baseOptions?: Apollo.MutationHookOptions<SetPlayableTimeMutation, SetPlayableTimeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetPlayableTimeMutation, SetPlayableTimeMutationVariables>(SetPlayableTimeDocument, options);
+      }
+export type SetPlayableTimeMutationHookResult = ReturnType<typeof useSetPlayableTimeMutation>;
+export type SetPlayableTimeMutationResult = Apollo.MutationResult<SetPlayableTimeMutation>;
+export type SetPlayableTimeMutationOptions = Apollo.BaseMutationOptions<SetPlayableTimeMutation, SetPlayableTimeMutationVariables>;
+export const GetPlayAbleCardsByDeskDocument = gql`
+    query getPlayAbleCardsByDesk($desk_name: String!) {
+  getPlayAbleCardsByDesk(desk_name: $desk_name) {
+    card_id
+    card_name
+    card_data_front
+    card_data_back
+    playable_in
+  }
+}
+    `;
+
+/**
+ * __useGetPlayAbleCardsByDeskQuery__
+ *
+ * To run a query within a React component, call `useGetPlayAbleCardsByDeskQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlayAbleCardsByDeskQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlayAbleCardsByDeskQuery({
+ *   variables: {
+ *      desk_name: // value for 'desk_name'
+ *   },
+ * });
+ */
+export function useGetPlayAbleCardsByDeskQuery(baseOptions: Apollo.QueryHookOptions<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>(GetPlayAbleCardsByDeskDocument, options);
+      }
+export function useGetPlayAbleCardsByDeskLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>(GetPlayAbleCardsByDeskDocument, options);
+        }
+export type GetPlayAbleCardsByDeskQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskQuery>;
+export type GetPlayAbleCardsByDeskLazyQueryHookResult = ReturnType<typeof useGetPlayAbleCardsByDeskLazyQuery>;
+export type GetPlayAbleCardsByDeskQueryResult = Apollo.QueryResult<GetPlayAbleCardsByDeskQuery, GetPlayAbleCardsByDeskQueryVariables>;
 export const CreateDeskDocument = gql`
     mutation createDesk($desk_name: String!) {
   createDesk(desk_name: $desk_name) {

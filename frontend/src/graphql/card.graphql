@@ -32,3 +32,20 @@ mutation editCard($cardInputData: CardEditData!) {
     message
   }
 }
+
+mutation setPlayableTime($card_id: String!, $date: DateTime!) {
+  setPlayableTime(card_id: $card_id, date: $date) {
+    path
+    message
+  }
+}
+
+query getPlayAbleCardsByDesk($desk_name: String!) {
+  getPlayAbleCardsByDesk(desk_name: $desk_name) {
+    card_id
+    card_name
+    card_data_front
+    card_data_back
+    playable_in
+  }
+}

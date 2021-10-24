@@ -27,8 +27,47 @@
   height: 40vh;
   background-color: $pure-white;
   border-radius: 1em;
-  padding: 2em 1em;
+  padding: 1em 1em;
+  & > h1 {
+    font-size: 1.5rem;
+  }
 }
 .play__buttons {
-  width: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+  & > .reveal {
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 0.5em 1em;
+    border-radius: 0.25em;
+    font-weight: bold;
+    color: $pure-white;
+    background-color: $darkest-blue;
+  }
+  & > .mark {
+    display: flex;
+    & > div {
+      padding: 0.5em 1em;
+      font-size: 1.2rem;
+      background-color: $thin-blue;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      position: relative;
+      &:hover {
+        text-decoration: underline;
+      }
+      &:not(:last-child):after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 80%;
+        background-color: $pure-black;
+        top: 10%;
+        right: 10%;
+      }
+    }
+  }
 }

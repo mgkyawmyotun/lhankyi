@@ -4,7 +4,7 @@ import { AppCard } from './pages/AppCard';
 import { CreateCard } from './pages/CreateCard';
 import { Login } from './pages/Login';
 import { MainApp } from './pages/MainApp';
-import { PlayCard } from './pages/PlayCard';
+import { PlayCardByDesk } from './pages/PlayCardByDesk';
 import { Register } from './pages/Register';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <CreateCard />
           </Route>
           <Route path="/play/:desk_name">
-            <PlayCard />
+            <PlayCardByDesk />
           </Route>
         </Switch>
       </Router>
