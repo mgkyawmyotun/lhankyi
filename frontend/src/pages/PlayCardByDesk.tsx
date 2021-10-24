@@ -39,7 +39,11 @@ export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
               card_name={currentCard.card_name}
               showBack={showBack}
             />
-            <PlayFooterButton showBack={showBack} setShowBack={setShowBack} />
+            <PlayFooterButton
+              showBack={showBack}
+              setShowBack={setShowBack}
+              card_id={currentCard.card_id}
+            />
           </div>
         )}
       </div>
