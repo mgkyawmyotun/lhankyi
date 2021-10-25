@@ -1,6 +1,6 @@
 # လှန်ကြည့် (lhankyi)
 <p align="center">
-  <a href="https://lhankyi.vercel.app/" target="blank"><img src="https://github.com/mgkyawmyotun/lhankyi/blob/main/design/logo.png" width="320" alt="Logo" /></a>
+  <a href="https://lhankyi.vercel.app/" target="blank"><img src="https://github.com/mgkyawmyotun/lhankyi/blob/main/design/logo.png" width="100%" alt="Logo" /></a>
 </p>
 ### စာမှတ်ရာတွင် လွယ်ကူရန်အတွက်ဖြစ်သည် (to memorize stuff easily)
 
