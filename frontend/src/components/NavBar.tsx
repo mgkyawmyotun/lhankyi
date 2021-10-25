@@ -16,13 +16,16 @@ export const NavBar: FC = () => {
     <>
       <div className={styles.nav}>
         <Logo />
-        <h3
-          onClick={() => {
-            dispatch(switchToAnother());
-          }}
-        >
-          {language}
-        </h3>
+        <div>
+          <h3
+            onClick={() => {
+              dispatch(switchToAnother());
+            }}
+          >
+            {language}
+          </h3>
+          <h3>Logout</h3>
+        </div>
       </div>
     </>
   );

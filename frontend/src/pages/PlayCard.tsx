@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavBar } from '../components/NavBar';
 import { Card, PlayFooterButton } from '../components/play';
 import { useGetPlayAbleCardsQuery } from '../generated/graphql';
+import { PlayTextData, selectPlay } from '../redux/slices/swithTextData';
+import { RootState } from '../redux/store';
 import styles from '../scss/play.module.scss';
 
 export type CardType = {
@@ -26,6 +29,7 @@ export const PlayCard: FC = () => {
   }, [data]);
   const [showBack, setShowBack] = useState<boolean>(false);
 
+  const text = useSelector<RootState, PlayTextData>(selectPlay);
   return (
     <div className={styles.app}>
       <div className={styles.app_container}>
@@ -51,13 +55,13 @@ export const PlayCard: FC = () => {
           </div>
         ) : (
           <div className={styles.outofcards}>
-            <h1>Completed</h1>
+            <h1>{text.complete}</h1>
             <h3
               onClick={() => {
                 goBack();
               }}
             >
-              Go Back
+              {text.back}
             </h3>
           </div>
         )}

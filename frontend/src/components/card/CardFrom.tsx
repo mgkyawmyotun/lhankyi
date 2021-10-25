@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
 import {
@@ -8,6 +9,8 @@ import {
   CardId,
   useCreateCardMutation,
 } from '../../generated/graphql';
+import { CardTextData, selectCard } from '../../redux/slices/swithTextData';
+import { RootState } from '../../redux/store';
 import styles from '../../scss/login.module.scss';
 import { cardSchema } from '../../utils/validation';
 
@@ -16,6 +19,7 @@ interface CardFormProps {
   closeModal: () => void;
 }
 export const CardForm: FC<CardFormProps> = ({ closeModal, desk_name }) => {
+  const text = useSelector<RootState, CardTextData>(selectCard);
   const [createCard] = useCreateCardMutation();
   const { push } = useHistory();
   return (
@@ -51,7 +55,7 @@ export const CardForm: FC<CardFormProps> = ({ closeModal, desk_name }) => {
             return (
               <>
                 <InputField
-                  label={'Card Name'}
+                  label={text.card_name}
                   name={'card_name'}
                   type="text"
                 ></InputField>
@@ -60,7 +64,7 @@ export const CardForm: FC<CardFormProps> = ({ closeModal, desk_name }) => {
                   onClick={() => handleSubmit()}
                   disabled={!!errors.card_name}
                 >
-                  Create
+                  {text.create}
                 </button>
               </>
             );

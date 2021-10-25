@@ -1,9 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import {
   GetCardsByDeskQuery,
   useGetCardsByDeskQuery,
 } from '../../generated/graphql';
+import { CardTextData, selectCard } from '../../redux/slices/swithTextData';
+import { RootState } from '../../redux/store';
 import styles from '../../scss/card.module.scss';
 import { Loading } from '../Loading';
 import { AddCard } from './AddCard';
@@ -11,6 +14,8 @@ import { CardPannel } from './CardPannel';
 import { PlayButton } from './PlayButton';
 
 export const Card: FC = () => {
+  const text = useSelector<RootState, CardTextData>(selectCard);
+
   const {
     params: { desk_name },
   } = useRouteMatch<{ desk_name: string }>();
@@ -40,7 +45,7 @@ export const Card: FC = () => {
             push('/');
           }}
         >
-          Back
+          {text.back}
         </h1>
         {loading ? <Loading /> : <CardPannel data={result} />}
         <PlayButton desk_name={desk_name} />

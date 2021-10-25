@@ -1,14 +1,18 @@
 import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
 import { Token, useLoginMutation, UserError } from '../../generated/graphql';
+import { LoginTextData, selectLogin } from '../../redux/slices/swithTextData';
+import { RootState } from '../../redux/store';
 import styles from '../../scss/login.module.scss';
 import { setToken } from '../../utils/auth';
 import { loginSchema } from '../../utils/validation';
 
 export const LoginForm: FC = () => {
+  const text = useSelector<RootState, LoginTextData>(selectLogin);
   const history = useHistory();
   const [loginUser] = useLoginMutation();
   return (
@@ -55,7 +59,7 @@ export const LoginForm: FC = () => {
                   onClick={() => handleSubmit()}
                   disabled={!!(errors.email || errors.password)}
                 >
-                  ဝင်မည်
+                  {text.create}
                 </button>
               </>
             );
