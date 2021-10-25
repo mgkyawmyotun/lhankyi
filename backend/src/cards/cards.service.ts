@@ -153,6 +153,7 @@ export class CardsService {
           card_name,
           card_data_back,
           card_data_front,
+          playable_in: new Date(),
         })
         .where('card_id = :id', { id: card_id })
         .execute();
