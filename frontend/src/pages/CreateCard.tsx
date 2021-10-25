@@ -8,6 +8,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { FC, useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { MyEditor } from '../components/editor/MyEditor';
+import { useIsUserLogin } from '../components/hook';
 import { Loading } from '../components/Loading';
 import { MainCard } from '../components/MainCard';
 import { NavBar } from '../components/NavBar';
@@ -20,6 +21,7 @@ export type CardData = {
   back: string;
 };
 export const CreateCard: FC = () => {
+  useIsUserLogin();
   const { params } = useRouteMatch<{ card_id: string }>();
   const { goBack } = useHistory();
   const [cardData, setCardData] = useState<CardData>({ front: '', back: '' });

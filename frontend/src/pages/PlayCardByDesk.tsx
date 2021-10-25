@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useIsUserLogin } from '../components/hook';
 import { NavBar } from '../components/NavBar';
 import { Card, PlayFooterButton } from '../components/play';
 import { useGetPlayAbleCardsByDeskQuery } from '../generated/graphql';
@@ -18,6 +19,7 @@ export type CardType = {
 };
 interface PlayCardByDeskProps {}
 export const PlayCardByDesk: FC<PlayCardByDeskProps> = () => {
+  useIsUserLogin();
   const { params } = useRouteMatch<{ desk_name: string }>();
   const { data, refetch } = useGetPlayAbleCardsByDeskQuery({
     variables: { desk_name: params.desk_name },

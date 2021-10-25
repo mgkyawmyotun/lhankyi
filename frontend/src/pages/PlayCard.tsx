@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useIsUserLogin } from '../components/hook';
 import { NavBar } from '../components/NavBar';
 import { Card, PlayFooterButton } from '../components/play';
 import { useGetPlayAbleCardsQuery } from '../generated/graphql';
@@ -17,6 +18,7 @@ export type CardType = {
   playable_in: any;
 };
 export const PlayCard: FC = () => {
+  useIsUserLogin();
   const { data, refetch } = useGetPlayAbleCardsQuery({
     fetchPolicy: 'network-only',
   });

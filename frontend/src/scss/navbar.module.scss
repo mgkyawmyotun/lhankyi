@@ -18,6 +18,11 @@
       &:hover {
         color: $pure-white;
       }
+      &:last-child {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

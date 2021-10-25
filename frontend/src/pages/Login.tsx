@@ -2,12 +2,14 @@ import type { FC } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useAlreadyLogin } from '../components/hook';
 import { LoginForm } from '../components/login/LoginForm';
 import { NavBar } from '../components/NavBar';
 import { LoginTextData, selectLogin } from '../redux/slices/swithTextData';
 import { RootState } from '../redux/store';
 import styles from '../scss/login.module.scss';
 export const Login: FC = () => {
+  useAlreadyLogin();
   const { push } = useHistory();
   const text = useSelector<RootState, LoginTextData>(selectLogin);
   return (

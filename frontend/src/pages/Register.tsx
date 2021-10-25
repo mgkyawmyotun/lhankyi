@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useAlreadyLogin } from '../components/hook';
 import { NavBar } from '../components/NavBar';
 import { RegisterForm } from '../components/register/RegisterForm';
 import {
@@ -12,8 +13,8 @@ import { RootState } from '../redux/store';
 import styles from '../scss/register.module.scss';
 import RegisterFormIllustraion from '../svg/ReigsterFormIllustration';
 export const Register: FC = () => {
+  useAlreadyLogin();
   const { push } = useHistory();
-  // const {}  = use
   const text = useSelector<RootState, RegisterTextData>(selectRegister);
   return (
     <div className={styles.register}>
