@@ -1,0 +1,15 @@
+version: '3'
+services:
+  frontend:
+    image: kyawmyotun/lhankyi_frontend
+  backend:
+    image: kyawmyotun/lhankyi
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5435:5432/tcp
+    enviroment:
+      POSTGRES_PASSWORD: lhankyi_password
+      POSTGRES_USER: lhankyi
+      POSTGRES_DB: lhankyi_db
