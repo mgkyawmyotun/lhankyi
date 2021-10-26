@@ -64,7 +64,7 @@ export class DeskService {
     } catch (error) {
       return {
         path: 'Internal Error',
-        message: 'Internal Error Please Contact Admin',
+        message: error.message,
       };
     }
   }

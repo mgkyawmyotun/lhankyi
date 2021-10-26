@@ -40,7 +40,9 @@ and many more open source libray to make productive
 $ docker-compose up
 ```
 
-
+## Contribution 
+contribtion is warmly welcome 
+from fixing typo to redesigning system 
 ## Licence
 
 MIT License
