@@ -21,6 +21,7 @@ export class DeskEntity {
   @OneToMany(
     () => CardEntity,
     card => card.desk,
+    { cascade: true },
   )
   cards: CardEntity[];
   @CreateDateColumn()

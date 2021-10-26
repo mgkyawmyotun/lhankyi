@@ -4,16 +4,18 @@ import { useGetUserQuery } from '../generated/graphql';
 import { getToken } from '../utils/auth';
 
 export function useAlreadyLogin() {
-  const { data } = useGetUserQuery({
+  const { data, loading } = useGetUserQuery({
     fetchPolicy: 'network-only',
   });
   const { push } = useHistory();
   useEffect(() => {
-    if (getToken().length > 0 && data && data.getUser) {
-      push('/');
+    if (!loading) {
+      if (getToken().length > 0 && data && data.getUser) {
+        push('/');
+      }
     }
     // eslint-disable-next-line
-  }, [data]);
+  }, [data, loading]);
 }
 export function useIsUserLogin() {
   const route = useHistory();
@@ -21,10 +23,10 @@ export function useIsUserLogin() {
     fetchPolicy: 'network-only',
   });
   useEffect(() => {
-    if (getToken().length === 0) {
-      route.push('/login');
-    }
     if (!loading) {
+      if (getToken().length === 0) {
+        route.push('/login');
+      }
       if (!data || !data.getUser) {
         route.push('/login');
       }

@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CONTEXT } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CardEntity } from '../cards/card.entity';
 import { GraphQlContextType } from '../share';
 import { DeskEntity } from './desk.entity';
 import { DeskError } from './desk.model';
@@ -12,12 +13,18 @@ export class DeskService {
   constructor(
     @InjectRepository(DeskEntity)
     private deskRepository: Repository<DeskEntity>,
+
+    @InjectRepository(CardEntity)
+    private cardRepository: Repository<CardEntity>,
     @Inject(CONTEXT) private context: GraphQlContextType,
   ) {}
   async getDesks() {
     try {
       const desks = await this.deskRepository.find({
-        user: { user_id: this.context.user_id },
+        relations: ['user'],
+        where: {
+          user: { user_id: this.context.user_id },
+        },
       });
       return desks;
     } catch (error) {
@@ -56,12 +63,14 @@ export class DeskService {
   }
   async removeDesk(name: string): Promise<DeskError> {
     try {
+      await this.cardRepository.delete({ desk: { name } });
       await this.deskRepository.delete({
         name: name,
         user: { user_id: this.context.user_id },
       });
       return null;
     } catch (error) {
+      console.log(error);
       return {
         path: 'Internal Error',
         message: error.message,
@@ -89,7 +98,7 @@ export class DeskService {
     } catch (error) {
       return {
         path: 'new_desk_name',
-        message: 'desk_name already exits',
+        message: error.message,
       };
     }
   }

@@ -31,7 +31,7 @@ export const LoginForm: FC = () => {
             if (data?.loginUser?.__typename === 'Token') {
               const { token } = data?.loginUser as Token;
               if (token) setToken(token);
-              history.push('/');
+              window.location.replace('/');
             } else {
               const error = data?.loginUser as UserError;
               setErrors({

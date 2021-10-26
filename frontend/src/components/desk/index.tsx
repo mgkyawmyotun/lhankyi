@@ -9,9 +9,10 @@ import { PlayButton } from './PlayButton';
 export const Desk: FC = () => {
   const [result, setResult] = useState<GetDesksQuery | undefined>();
   const [loading, setLoading] = useState<boolean>(true);
-  const { data, refetch } = useGetDesksQuery();
+  const { data, refetch } = useGetDesksQuery({ fetchPolicy: 'network-only' });
   useEffect(() => {
     if (data) {
+      console.log(data);
       setResult(data);
       setLoading(false);
     }

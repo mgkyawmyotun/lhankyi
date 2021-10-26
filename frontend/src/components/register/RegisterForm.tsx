@@ -39,7 +39,7 @@ export const RegisterForm: FC = () => {
             if (data?.createUser?.__typename === 'Token') {
               const { token } = data?.createUser as Token;
               if (token) setToken(token);
-              history.push('/');
+              window.location.replace('/');
             } else {
               const error = data?.createUser as UserError;
               setErrors({ [error.path as string]: error.message });
