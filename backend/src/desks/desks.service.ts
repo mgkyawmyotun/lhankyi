@@ -53,7 +53,6 @@ export class DeskService {
       });
       await this.deskRepository.save(desk);
     } catch (error) {
-      console.log(error);
       return {
         path: 'desk_name',
         message: error.message,

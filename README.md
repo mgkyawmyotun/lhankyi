@@ -1,8 +1,19 @@
 # လှန်ကြည့် (lhankyi)
 <p align="center">
-  <a href="https://lhankyi.vercel.app/" target="blank"><img src="https://github.com/mgkyawmyotun/lhankyi/blob/main/design/logo.png" width="100%" alt="Logo" /></a>
+  <a href="https://lhankyi.vercel.app/" target="blank">
+  <img src="https://github.com/mgkyawmyotun/lhankyi/blob/main/design/logo.svg" width="100%" alt="Logo" />
+  </a>
 </p>
+<p align="center"> lhankyi will help you memorize easily </p>
 
+<p align="center">
+<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/mgkyawmyotun/lhankyi">
+<img alt="GitHub branch checks state" src="https://img.shields.io/github/checks-status/mgkyawmyotun/lhankyi/main">
+<img alt="Docker Image Size (latest by date)" src="https://img.shields.io/docker/image-size/kyawmyotun/lhankyi">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/mgkyawmyotun/lhankyi">
+<img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/mgkyawmyotun/lhankyi">
+<img alt="GitHub" src="https://img.shields.io/github/license/mgkyawmyotun/lhankyi">
+</p>
 ### စာမှတ်ရာတွင် လွယ်ကူရန်အတွက်ဖြစ်သည် (to memorize stuff easily)
 
 ## Overview
