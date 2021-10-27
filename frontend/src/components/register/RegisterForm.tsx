@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
 import {
   Token,
@@ -18,7 +17,6 @@ import styles from '../../scss/register.module.scss';
 import { setToken } from '../../utils/auth';
 import { registerSchema } from '../../utils/validation';
 export const RegisterForm: FC = () => {
-  const history = useHistory();
   const [createUser] = useCreateUserMutation();
   const text = useSelector<RootState, RegisterTextData>(selectRegister);
   return (

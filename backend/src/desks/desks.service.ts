@@ -13,7 +13,6 @@ export class DeskService {
   constructor(
     @InjectRepository(DeskEntity)
     private deskRepository: Repository<DeskEntity>,
-
     @InjectRepository(CardEntity)
     private cardRepository: Repository<CardEntity>,
     @Inject(CONTEXT) private context: GraphQlContextType,
@@ -54,6 +53,7 @@ export class DeskService {
       });
       await this.deskRepository.save(desk);
     } catch (error) {
+      console.log(error);
       return {
         path: 'desk_name',
         message: error.message,

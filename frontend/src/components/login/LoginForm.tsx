@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import type { FC } from 'react';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { InputField } from '../../components/InputField';
 import { Token, useLoginMutation, UserError } from '../../generated/graphql';
 import { LoginTextData, selectLogin } from '../../redux/slices/swithTextData';
@@ -13,7 +12,6 @@ import { loginSchema } from '../../utils/validation';
 
 export const LoginForm: FC = () => {
   const text = useSelector<RootState, LoginTextData>(selectLogin);
-  const history = useHistory();
   const [loginUser] = useLoginMutation();
   return (
     <>
