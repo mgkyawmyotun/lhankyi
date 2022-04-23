@@ -4,7 +4,7 @@
   <img src="https://github.com/mgkyawmyotun/lhankyi/blob/main/design/logo.svg" width="100%" alt="Logo" />
   </a>
 </p>
-<p align="center"> lhankyi will help you memorize easily </p>
+<p align="center"> lhankyi will help you memorize easily. </p>
 
 <p align="center">
 <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/mgkyawmyotun/lhankyi">
